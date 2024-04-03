@@ -2,6 +2,7 @@ let task = document.querySelectorAll(".task");
 let sidebar_elements_text = document.querySelectorAll(".e");
 let sidebar_elements = document.querySelectorAll(".e1");
 let special = document.querySelectorAll(".special");
+let add_button = document.querySelector(".add-button");
 sidebar_elements.forEach(element => {
     element.style.display = "none";
 })
@@ -37,4 +38,3 @@ sidebar_elements_text.forEach((element, index) => {
         prev = index;
     });
 });
-

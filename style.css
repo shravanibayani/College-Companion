@@ -50,8 +50,8 @@ header {
     width: 6.5rem;
     border-radius: 0.25rem;
     border: none;
-    background-color: white;
-    color: #3B82F6;
+    color: white;
+    background-color: #3B82F6;
     font-size: 1rem;
     margin-right: 1.5rem;
     border: 0.1rem #3B82F6 solid;
@@ -59,8 +59,7 @@ header {
 }
 
 .search-button:hover {
-    background-color: #3B82F6;
-    color: white;
+    background-color: #3481B8;
 }
 
 .search-area {
@@ -111,8 +110,9 @@ side-bar {
     transition: all 0.1ms ease-in 0s;
 }
 
-.t:hover {
-    border-bottom: #374151 solid;
+.t:hover{
+    background-color: #D9D9D9;
+    border-radius: 0.3rem;
 }
 
 .t-active span {
@@ -123,7 +123,6 @@ side-bar {
 
 .ic {
     margin-right: 0.7rem;
-
 }
 
 .ic2 {
@@ -181,16 +180,14 @@ side-bar {
     width: 6.5rem;
     border-radius: 0.25rem;
     border: none;
-    background-color: white;
-    color: #3B82F6;
-    border: 0.1rem #3B82F6 solid;
+    background-color: #3B82F6;
+    color: white;
     font-size: 1rem;
     cursor: pointer;
 }
 
 .add-button:hover {
-    background-color: #3B82F6;
-    color: white;
+    background-color: #3481B8;
 }
 
 .to-do-list span {
