@@ -20,7 +20,7 @@ sidebar_elements_text.forEach((element, index) => {
     element.addEventListener("click", () => {
         if (prev !== null) {
             if (!sidebar_elements_text[prev].classList.contains("special")) {
-                sidebar_elements_text[prev].classList.remove("t-active");
+                sidebar_elements_text[prev].classList.remove("feature-active");
             }
 
             else {
@@ -32,7 +32,7 @@ sidebar_elements_text.forEach((element, index) => {
             element.classList.add("special-active");
         }
         else {
-            element.classList.add("t-active");
+            element.classList.add("feature-active");
         }
         sidebar_elements[index].style.display = "block";
         prev = index;
