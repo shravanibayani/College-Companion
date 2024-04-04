@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>College Companion</title>
+    <!-- google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -14,13 +15,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
         rel="stylesheet">
+        <!-- font awesome icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <!-- css file -->
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+    <!-- nav bar -->
     <header>
         <div class="app-heading">
             <svg width="34" height="34" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -31,14 +35,18 @@
             <div class="app-name"><span>College Companion</span></div>
         </div>
         <div class="search-area">
+            <!-- search box -->
             <input type="text" class="search-bar" placeholder="Search...">
+            <!-- search button -->
             <button class="search-button">Search</button>
         </div>
     </header>
     <main>
+        <!-- side bar -->
         <side-bar>
             <div class="side-bar">
                 <div class="elements">
+                    <!-- side bar - todo_list -->
                     <div class="to-do-list-name e">
                         <svg class="ic" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect width="18" height="18" fill="white"/>
@@ -48,9 +56,9 @@
                             <path d="M4.78516 11.91L5.34766 12.4725L7.03516 10.785" stroke="#374151" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M6.75 16.5H11.25C15 16.5 16.5 15 16.5 11.25V6.75C16.5 3 15 1.5 11.25 1.5H6.75C3 1.5 1.5 3 1.5 6.75V11.25C1.5 15 3 16.5 6.75 16.5Z" stroke="#374151" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            
                         <span class="t">To-Do List</span>
                     </div>
+                    <!-- side bar - timetable -->
                     <div class="time-table-name e">
                         <svg class="ic" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M6.66699 4.79166C6.32533 4.79166 6.04199 4.50832 6.04199 4.16666V1.66666C6.04199 1.32499 6.32533 1.04166 6.66699 1.04166C7.00866 1.04166 7.29199 1.32499 7.29199 1.66666V4.16666C7.29199 4.50832 7.00866 4.79166 6.66699 4.79166Z" fill="#374151"/>
@@ -64,9 +72,9 @@
                             <path d="M17.0837 8.19998H2.91699C2.57533 8.19998 2.29199 7.91665 2.29199 7.57498C2.29199 7.23331 2.57533 6.94998 2.91699 6.94998H17.0837C17.4253 6.94998 17.7087 7.23331 17.7087 7.57498C17.7087 7.91665 17.4253 8.19998 17.0837 8.19998Z" fill="#374151"/>
                             <path d="M13.3333 18.9583H6.66667C3.625 18.9583 1.875 17.2083 1.875 14.1667V7.08332C1.875 4.04166 3.625 2.29166 6.66667 2.29166H13.3333C16.375 2.29166 18.125 4.04166 18.125 7.08332V14.1667C18.125 17.2083 16.375 18.9583 13.3333 18.9583ZM6.66667 3.54166C4.28333 3.54166 3.125 4.69999 3.125 7.08332V14.1667C3.125 16.55 4.28333 17.7083 6.66667 17.7083H13.3333C15.7167 17.7083 16.875 16.55 16.875 14.1667V7.08332C16.875 4.69999 15.7167 3.54166 13.3333 3.54166H6.66667Z" fill="#374151"/>
                             </svg>
-                            
                         <span class="t">Time Table</span>
                     </div>
+                    <!-- side bar - study_buddy -->
                     <div class="study-buddy-name e">
                         <svg class="ic" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect width="20" height="20" fill="white"/>
@@ -74,9 +82,9 @@
                             <path d="M4.69193 10.9L4.68359 14.8083C4.68359 15.8667 5.50026 17 6.50026 17.3333L9.15859 18.2167C9.61693 18.3667 10.3753 18.3667 10.8419 18.2167L13.5003 17.3333C14.5003 17 15.3169 15.8667 15.3169 14.8083V10.9417" stroke="#374151" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M17.833 12.5V7.5" stroke="#374151" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            
                         <span class="t">Study Buddy</span>
                     </div>
+                    <!-- side bar - attendance -->
                     <div class="attendance-name e">
                         <svg class="ic" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g clip-path="url(#clip0_1123_1496)">
@@ -88,64 +96,71 @@
                             </clipPath>
                             </defs>
                             </svg>
-                            
                         <span class="t">Attendance</span>
                     </div>
+                    <!-- side bar - notification -->
                     <div class="notifications-name e">
                         <svg class="ic" width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M10.0321 2.425C7.27379 2.425 5.03212 4.66667 5.03212 7.425V9.83334C5.03212 10.3417 4.81545 11.1167 4.55712 11.55L3.59879 13.1417C3.00712 14.125 3.41545 15.2167 4.49879 15.5833C8.09045 16.7833 11.9655 16.7833 15.5571 15.5833C16.5655 15.25 17.0071 14.0583 16.4571 13.1417L15.4988 11.55C15.2488 11.1167 15.0321 10.3417 15.0321 9.83334V7.425C15.0321 4.675 12.7821 2.425 10.0321 2.425Z" stroke="#374151" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/>
                             <path d="M11.5736 2.66667C11.3152 2.59167 11.0486 2.53334 10.7736 2.5C9.97357 2.4 9.2069 2.45834 8.49023 2.66667C8.7319 2.05 9.3319 1.61667 10.0319 1.61667C10.7319 1.61667 11.3319 2.05 11.5736 2.66667Z" stroke="#374151" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M12.5322 15.8833C12.5322 17.2583 11.4072 18.3833 10.0322 18.3833C9.34889 18.3833 8.71556 18.1 8.26556 17.65C7.81556 17.2 7.53223 16.5667 7.53223 15.8833" stroke="#374151" stroke-width="1.5" stroke-miterlimit="10"/>
                             </svg>
-                            
                         <span class="t">Notifications</span>
                     </div>
+                    <!-- side bar - settings -->
                     <div class="settings-name e">
                         <svg class="ic" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M10 12.5C11.3807 12.5 12.5 11.3807 12.5 10C12.5 8.61929 11.3807 7.5 10 7.5C8.61929 7.5 7.5 8.61929 7.5 10C7.5 11.3807 8.61929 12.5 10 12.5Z" stroke="#374151" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M1.66699 10.7333V9.26666C1.66699 8.4 2.37533 7.68333 3.25033 7.68333C4.75866 7.68333 5.37533 6.61666 4.61699 5.30833C4.18366 4.55833 4.44199 3.58333 5.20033 3.15L6.64199 2.325C7.30033 1.93333 8.15033 2.16666 8.54199 2.825L8.63366 2.98333C9.38366 4.29166 10.617 4.29166 11.3753 2.98333L11.467 2.825C11.8587 2.16666 12.7087 1.93333 13.367 2.325L14.8087 3.15C15.567 3.58333 15.8253 4.55833 15.392 5.30833C14.6337 6.61666 15.2503 7.68333 16.7587 7.68333C17.6253 7.68333 18.342 8.39166 18.342 9.26666V10.7333C18.342 11.6 17.6337 12.3167 16.7587 12.3167C15.2503 12.3167 14.6337 13.3833 15.392 14.6917C15.8253 15.45 15.567 16.4167 14.8087 16.85L13.367 17.675C12.7087 18.0667 11.8587 17.8333 11.467 17.175L11.3753 17.0167C10.6253 15.7083 9.39199 15.7083 8.63366 17.0167L8.54199 17.175C8.15033 17.8333 7.30033 18.0667 6.64199 17.675L5.20033 16.85C4.44199 16.4167 4.18366 15.4417 4.61699 14.6917C5.37533 13.3833 4.75866 12.3167 3.25033 12.3167C2.37533 12.3167 1.66699 11.6 1.66699 10.7333Z" stroke="#374151" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            
                         <span class="t">Settings</span>
                     </div>
+                    <!-- side bar - personalizedGPT -->
                     <div class="personalized-gpt-name e special">
                         <svg class="ic2" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M14.4588 7.54167L12.5088 13.825C12.0421 15.3167 9.95046 15.3417 9.4588 13.8583L8.87547 12.1333C8.71713 11.6583 8.34213 11.275 7.86713 11.125L6.1338 10.5417C4.6588 10.05 4.6838 7.94167 6.17547 7.49167L12.4588 5.53334C13.6921 5.15834 14.8505 6.31667 14.4588 7.54167Z" stroke="#374151" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M7.50033 18.3333H12.5003C16.667 18.3333 18.3337 16.6667 18.3337 12.5V7.5C18.3337 3.33333 16.667 1.66667 12.5003 1.66667H7.50033C3.33366 1.66667 1.66699 3.33333 1.66699 7.5V12.5C1.66699 16.6667 3.33366 18.3333 7.50033 18.3333Z" stroke="#374151" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            
                         <span>PersonalizedGPT</span>
                     </div>
+                    <!-- side bar - get_directions -->
                     <div class="get-directions-name e special">
                         <svg class="ic2" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M3.01675 7.075C4.65842 -0.141667 15.3501 -0.133334 16.9834 7.08333C17.9417 11.3167 15.3084 14.9 13.0001 17.1167C11.3251 18.7333 8.67508 18.7333 6.99175 17.1167C4.69175 14.9 2.05842 11.3083 3.01675 7.075Z" stroke="#374151" stroke-width="1.5"/>
                             <path d="M7.70801 9.58333L8.95801 10.8333L12.2913 7.5" stroke="#374151" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            
                         <span>Get Directions</span>
                     </div>
                 </div>
             </div>
         </side-bar>
+        <!-- main content -->
         <div class="display">
+            <!-- to_do list -->
             <div class="to-do-list e1">
                 <div class="add-part">
+                    <!-- add task box -->
                     <input type="text" class="add-new-task" placeholder="Add new task...">
+                    <!-- add task button -->
                     <button class="add-button">Add</button>
                 </div>
+                <!-- remaining tasks -->
                 <div class="remaining-tasks">
                     <span>To Do</span>
                     <div class="tasks">
+                        <!-- task1 -->
                         <div class="task">
                             <div class="check-div"><input type="checkbox" class="check"></div>
                             <span>task1 </span>
                             <i class="fa-solid fa-circle-xmark" style="color: #f63b3b;"></i>
                         </div>
+                        <!-- task2 -->
                         <div class="task">
                             <div class="check-div"><input type="checkbox" class="check"></div>
                             <span>task1 </span>
                             <i class="fa-solid fa-circle-xmark" style="color: #f63b3b;"></i>
                         </div>
+                        <!-- task3 -->
                         <div class="task">
                             <div class="check-div"><input type="checkbox" class="check"></div>
                             <span>task1 </span>
@@ -153,14 +168,17 @@
                         </div>
                     </div>
                 </div>
+                <!-- completed tasks -->
                 <div class="completed-tasks">
                     <span>Completed</span>
                     <div class="tasks">
+                        <!-- task1 -->
                         <div class="task">
                             <div class="check-div"><input type="checkbox" class="check" checked ></div>
                             <span>task1 </span>
                             <i class="fa-solid fa-circle-xmark" style="color: #f63b3b;"></i>
                         </div>
+                        <!-- task2 -->
                         <div class="task">
                             <div class="check-div"><input type="checkbox" class="check" checked ></div>
                             <span>task1 </span>
@@ -169,12 +187,19 @@
                     </div>
                 </div>
             </div>
+            <!-- timetable -->
             <div class="time-table e1"></div>
+            <!-- study_buddy -->
             <div class="study-buddy e1"></div>
+            <!-- attendance -->
             <div class="attendance e1"></div>
+            <!-- notifications -->
             <div class="notifications e1"></div>
+            <!-- settings -->
             <div class="settings e1"></div>
+            <!-- personalizedGPT -->
             <div class="personalized-gpt e1"></div>
+            <!-- get_directions -->
             <div class="get-directions e1"></div>
         </div>
     </main>
