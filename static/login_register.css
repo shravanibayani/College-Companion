@@ -1,0 +1,40 @@
+form.form {
+    display: table;
+}
+
+div.form {
+    display: table-row;
+}
+
+label,
+input {
+    display: table-cell;
+    margin-bottom: 10px;
+}
+
+label {
+    padding-right: 10px;
+}
+
+.error {
+    color: red;
+}
+
+.success {
+    color:green;
+}
+
+.continue-to-login {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: rgb(96, 241, 96);
+    color:white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.continue-to-login:hover {
+    background-color: darkgreen;
+}
