@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="/static/styles.css">
 
     <!-- title -->
-    <title>College Companion: {% block title %}{% endblock %}</title>
+    <title>College Companion: Home</title>
 </head>
 
 <body>
@@ -173,6 +173,10 @@
                         </svg>
                         <span class="t">Settings</span>
                     </div>
+                    <!-- logout -->
+                    <div>
+                        <a href="/logout">Logout</a>
+                    </div>
                     <!-- side bar - personalizedGPT -->
                     <div class="personalized-gpt-name e special">
                         <svg class="ic2" width="20" height="20" viewBox="0 0 20 20" fill="none"
@@ -203,7 +207,6 @@
         </side-bar>
         <!-- main content -->
         <div class="display">
-            {% block main %}{% endblock %}
         </div>
     </main>
     <script src="../script.js"></script>
