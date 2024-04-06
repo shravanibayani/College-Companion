@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/login_register.css" />
+    <title>College Companion: Register</title>
+</head>
+
+<body>
+    <div>
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
+    </div>
+    <div>
+        {% if success %}
+        <p class="success">{{ success }}</p>
+        {% endif %}
+    </div>
+    <form action="/register" method="post" class="form">
+        <div class="form">
+            <lable for="username">Username:</lable>
+            <input type="text" name="username" id="username" required />
+        </div>
+        <div class="form">
+            <lable for="email">Email:</lable>
+            <input type="email" name="email" id="email" required />
+        </div>
+        <div class="form">
+            <lable for="password">Password:</lable>
+            <input type="password" name="password" id="password" />
+            <p>Password must be at atleast 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character.</p>
+        </div>
+        <div class="form">
+            <lable for="confirmation">Confirm Password:</lable>
+            <input type="password" name="confirmation" id="confirmation" />
+        </div>
+        <!-- will check this later 
+        <div class="form">
+            <lable for="branch">Branch</lable>
+            <select name="branch">
+                <option value="csd">Computer Science and Design</option>
+            </select>
+        </div>
+        <div class="form">
+            <fieldset>
+                <legend>Division:</legend>
+                <div>
+                    <input type="radio" name="a" value="A" id="a" />
+                    <lable for="a">A</lable>
+                </div>
+                <div>
+                    <input type="radio" name="b" value="B" id="b" />
+                    <lable for="b">B</lable>
+                </div>
+            </fieldset>
+        </div>
+        <div class="form">
+            <lable for="roll-no">Roll Number:</lable>
+            <input type="number" name="rollno" id="roll-no" />
+        </div>
+        -->
+        <div class="form">
+            <input type="submit" value="Register" />
+        </div>
+    </form>
+    {% if success %}
+    <a href="/login" class="continue-to-login">Continue to login</a>
+    {% endif %}
+</body>
+
+</html>
