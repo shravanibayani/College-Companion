@@ -102,5 +102,37 @@ def logout():
     return redirect("/")
 
 
+# to-do list feature
+@app.route("/to-do")
+def to_do():
+    tasks = db.execute("SELECT * FROM todo WHERE student_id = ?", session['user_id'])
+    task_number = 1
+    return render_template("todo.html", tasks=tasks)
+
+
+# add to-do route
+@app.route("/add-to-do", methods=['POST'])
+def add_to_do():
+    task = request.form.get("task")
+    db.execute("INSERT INTO todo (task, status, student_id) VALUES (?, ?, ?)", task, -1, session['user_id'])
+    return redirect("/to-do")
+
+
+# update task status route
+@app.route("/update/<int:task_id>")
+def update_to_do(task_id):
+    curr_status = db.execute("SELECT status FROM todo WHERE id = ? AND student_id = ?", task_id, session['user_id'])
+    new_status = -1 * curr_status[0]['status']
+    db.execute("UPDATE todo SET status = ? WHERE id = ? AND student_id = ?", new_status, task_id, session['user_id'])
+    return redirect("/to-do")
+
+
+# delete task status route
+@app.route("/delete/<int:task_id>")
+def delete_to_do(task_id):
+    db.execute("DELETE FROM todo WHERE id = ? AND student_id = ?", task_id, session['user_id'])
+    return redirect("/to-do")
+
+
 if __name__ == '__main__':
     app.run(debug=True)

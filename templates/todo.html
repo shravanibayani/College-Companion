@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}
+To-Do
+{% endblock %}
+
+{% block main %}
+<form method="post" action="/add-to-do">
+    <input type="text" name="task" placeholder="Enter to do..." autocomplete="off" autofocus required />
+    <button type="submit">Add</button>
+</form>
+<div class="todo-list">
+    {% for task in tasks %}
+    <div class="todo-item">
+        {{ task['task'] }}
+    </div>
+    <div class="task-status">
+        {% if task['status'] == 1 %}
+        <span>Completed</span>
+        {% else %}
+        <span>Not Completed</span>
+        {% endif %}
+        <a href="/update/{{ task['id'] }}" class="task-update">Update</a>
+        <a href="/delete/{{ task['id'] }}" class="task-delete">Delete</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+.todo-list {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.todo-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.task-number {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.task-status {
+    margin-top: 5px;
+}
+
+.task-status span {
+    padding: 3px 5px;
+    border-radius: 3px;
+}
+
+.task-status span.Completed {
+    background-color: #5cb85c;
+    color: #fff;
+}
+
+.task-status span.NotCompleted {
+    background-color: #d9534f;
+    color: #fff;
+}
+
+.task-update,
+.task-delete {
+    color: #337ab7;
+    text-decoration: none;
+    margin-left: 10px;
+}
