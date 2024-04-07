@@ -16,16 +16,6 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 
-"""
-@app.after_request
-def after_request(response):
-    # To make sure responses aren't cached
-    response.header["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    response.headers["Expires"] = 0
-    response.headers["Pragma"] = "no-cache" 
-"""
-
-
 @app.route("/")
 @login_required
 def home():
@@ -99,7 +89,7 @@ def register():
                 )
                 return render_template("register.html", error=error, success="Registration Successful!")
             except:
-                return render_template("register.html", error="Username has already been registered", success=success)
+                return render_template("register.html", error="Username and/or email has already been registered", success=success)
         else:
             return render_template("register.html", error=error, success=success)
     else:
