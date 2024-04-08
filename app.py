@@ -87,7 +87,7 @@ def register():
                     password_hash,
                     email
                 )
-                return render_template("register.html", error=error, success="Registration Successful!")
+                return render_template("register.html", error=error, success="Registration Successful !")
             except:
                 return render_template("register.html", error="Username and/or email has already been registered", success=success)
         else:

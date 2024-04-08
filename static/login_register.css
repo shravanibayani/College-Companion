@@ -8,6 +8,16 @@ body{
     display: flex;
     font-family: "Roboto", sans-serif;
 }
+.error{
+    border:0.05rem red solid;
+}
+.success{
+    border:0.05rem green solid;
+}
+.msg p{
+    padding:0.5rem;
+    font-weight: 500;
+}
 .cover-side{
     font-family: "Open Sans", sans-serif;
     height:100%;
