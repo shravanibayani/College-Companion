@@ -121,3 +121,46 @@ input[type="submit"]:hover {
 .form p{
     display: inline;
 }
+
+
+/* only for branch and division selection */ 
+
+.form select {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #D1D5DB;
+    border-radius: 0.5rem;
+    background-color: #F3F4F6;
+    color: #374151;
+  }
+  
+  /* Style the radio buttons and labels */
+  .form fieldset {
+    border: none;
+    padding: 0;
+  }
+  
+  .form fieldset legend {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  
+  .form fieldset div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .form fieldset input[type="radio"] {
+    margin-right: 0.5rem;
+    accent-color: #3B82F6;
+    height:1.5rem;
+
+  }
+  
+  .form fieldset label {
+    font-size: 1rem;
+    color: #374151;
+  }
