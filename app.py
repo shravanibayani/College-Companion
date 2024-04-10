@@ -21,6 +21,9 @@ branches = ['csd']
 # Allowed divisions 
 divisions = ['A', 'B']
 
+# Allowed Years
+years = [1 , 2, 3, 4]
+
 @app.route("/")
 @login_required
 def home():
@@ -70,6 +73,8 @@ def register():
         branch = request.form.get("branch")
         division = request.form.get("division")
         rollno = request.form.get("rollno")
+        year = request.form.get("year")
+        year_int = int(year)
         error = None
         success = None
         if not username:
@@ -98,17 +103,20 @@ def register():
             error = "Please enter your roll number"
         elif int(rollno) < 1 or int(rollno) > 77:
             error = "Please enter a valid roll number"
+        elif not year_int or year_int not in years:
+            error = "Please choose a valid year"
         password_hash = generate_password_hash(password)
         if error is None: 
             try:
                 db.execute(
-                    "INSERT INTO students (username, password_hash, email, roll_no, branch, division) VALUES (?, ?, ?, ?, ?, ?)",
+                    "INSERT INTO students (username, password_hash, email, roll_no, branch, division, year) VALUES (?, ?, ?, ?, ?, ?, ?)",
                     username,
                     password_hash,
                     email,
                     int(rollno),
                     branch,
-                    division
+                    division,
+                    year_int
                 )
                 return render_template("register.html", error=error, success="Registration Successful!")
             except:
@@ -157,8 +165,8 @@ def delete_to_do(task_id):
     return redirect("/to-do")
 
 
-# timetable
-@app.route("/timetable")
+# # timetable
+# @app.route("/timetable")
 
 
 
