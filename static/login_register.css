@@ -91,21 +91,6 @@ div.form {
     padding-left: 0.7rem;
 }
 
-.branch {
-    color: #A9A9A9;
-    /* Placeholder text color */
-    opacity: 1;
-    /* Placeholder text opacity */
-    font-size: 1em;
-    /* Placeholder text font size */
-    font-style: italic;
-    /* Placeholder text font style */
-    font-weight: normal;
-    /* Placeholder text font weight */
-    text-align: left;
-    /* Placeholder text alignment */
-}
-
 input {
     display: table-cell;
     height: 2.5rem;
