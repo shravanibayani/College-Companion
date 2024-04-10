@@ -150,11 +150,19 @@ def update_to_do(task_id):
     return redirect("/to-do")
 
 
-# delete task status route
+# delete task route
 @app.route("/delete/<int:task_id>")
 def delete_to_do(task_id):
     db.execute("DELETE FROM todo WHERE id = ? AND student_id = ?", task_id, session['user_id'])
     return redirect("/to-do")
+
+
+# timetable
+@app.route("/timetable")
+
+
+
+
 
 
 if __name__ == '__main__':
