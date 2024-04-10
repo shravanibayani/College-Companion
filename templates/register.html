@@ -44,26 +44,21 @@
         </div>
         <form action="/register" method="post" class="form">
             <div class="form">
-                <label for="username">Username:</label>
-                <input type="text" name="username" id="username" required />
+                <input type="text" name="username" id="username" required placeholder="Username" />
             </div>
             <div class="form">
-                <label for="email">Email:</label>
-                <input type="email" name="email" id="email" required />
+                <input type="email" name="email" id="email" required placeholder="Email" />
             </div>
             <div class="form">
-                <label for="password">Password:</label>
-                <input type="password" name="password" id="password" />
+                <input type="password" name="password" id="password" placeholder="Password" />
             </div>
             <div class="form">
-                <label for="confirmation">Confirm Password:</label>
-                <input type="password" name="confirmation" id="confirmation" />
+                <input type="password" name="confirmation" id="confirmation" placeholder="Confirm Password" />
             </div>
 
             <div class="form">
-                <label for="branch">Branch</label>
                 <select name="branch">
-                    <option value="" disabled selected>Select</option>
+                    <option value="" disabled selected>Branch</option>
                     <option value="csd">Computer Science and Design</option>
                 </select>
             </div>
@@ -79,21 +74,24 @@
             </div>
 
             <div class="form">
-                <fieldset>
+                <div class="flexbox">
                     <legend>Division:</legend>
-                    <div>
-                        <input type="radio" name="division" value="A" id="a" />
-                        <label for="a">A</label>
+                    <div class="flexbox">
+                        <label for="a" class="flexbox Division">
+                            <input type="radio" name="division" value="A" id="a" /><span class="radio-label">A</span>
+                        </label>
+                        <label for="b" class="flexbox Division">
+                            <input type="radio" name="division" value="B" id="b" /><span class="radio-label">B</span>
+                        </label>
                     </div>
-                    <div>
-                        <input type="radio" name="division" value="B" id="b" />
-                        <label for="b">B</label>
-                    </div>
-                </fieldset>
+                </div>
+
             </div>
             <div class="form">
-                <label for="roll-no">Roll Number:</label>
-                <input type="number" name="rollno" id="roll-no" />
+                <div class="flexbox">
+                    <label for="roll-no">Roll Number:</label>
+                    <input type="number" name="rollno" id="roll-no" class="rollNo" />
+                </div>
             </div>
 
             <div class="form submit">
@@ -105,4 +103,5 @@
         {% endif %}
     </div>
 </body>
+
 </html>

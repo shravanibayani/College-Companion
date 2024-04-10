@@ -1,84 +1,119 @@
-*{
-    margin:0;
-    padding:0;
+* {
+    margin: 0;
+    padding: 0;
 }
-body{
-    height:100vh;
-    width:100vw;
+
+body {
+    height: 100vh;
+    width: 100vw;
     display: flex;
     font-family: "Roboto", sans-serif;
 }
-.error{
-    border:0.05rem red solid;
+
+.error {
+    border: 0.05rem red solid;
 }
-.success{
-    border:0.05rem green solid;
+
+.success {
+    border: 0.05rem green solid;
 }
-.msg p{
-    padding:0.5rem;
+
+.msg p {
+    padding: 0.5rem;
     font-weight: 500;
 }
-.cover-side{
+
+.cover-side {
     font-family: "Open Sans", sans-serif;
-    height:100%;
-    width:34%;
+    height: 100%;
+    width: 34%;
     background-color: #3B82F6;
     display: flex;
     justify-content: center;
     align-items: center;
     font-weight: 750;
 }
-.app-name{
+
+.app-name {
     padding-top: 0.5rem;
 }
-.logo-div{
+
+.logo-div {
     display: flex;
     flex-direction: column;
     align-items: center;
     font-size: 2rem;
-    color:white;
+    color: white;
 }
-.second-content{
-    width:calc(100% - 34%);
+
+.second-content {
+    width: calc(100% - 34%);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color:#374151;
+    color: #374151;
     font-size: 1rem;
+    overflow: hidden;
 }
+
 form.form {
     display: table;
-    width:50%;
+    width: 50%;
+    height: 55%;
     border-collapse: separate;
     border-spacing: 1.5rem;
+
+}
+
+.flexbox {
+    display: flex;
+    align-items: center;
 }
 
 div.form {
     display: table-row;
 }
 
-.form label{
+.form label {
     display: flex;
-    padding-bottom: 0.5rem;
+}
+
+.Division {
+    margin-left: 1rem;
+}
+
+.Division input[type="radio"] {
+    transform: scale(1.5);
+}
+
+.radio-label {
+    padding-left: 0.7rem;
 }
 
 input {
     display: table-cell;
-    height:2.5rem;
-    width:100%;
-    border:0.05rem rgba(102, 102, 102,0.35) solid;
+    height: 2.5rem;
+    width: 100%;
+    border: 0.05rem rgba(102, 102, 102, 0.35) solid;
     border-radius: 0.7rem;
-    padding-left:1rem;
+    padding-left: 1rem;
 }
-.form p{
+
+.rollNo {
+    width: 15%;
+    margin-left: 1rem;
+}
+
+.form p {
     padding-top: 0.5rem;
-    color:#666666;
+    color: #666666;
     font-size: 0.875rem;
 }
+
 input[type="submit"] {
-    width:10rem;
-    height:3rem;
+    width: 10rem;
+    height: 3rem;
     background-color: #3B82F6;
     color: white;
     border: none;
@@ -88,10 +123,12 @@ input[type="submit"] {
     font-weight: 500;
     padding: 0;
 }
+
 input[type="submit"]:hover {
     background-color: #06347D;
 }
-.submit{
+
+.submit {
     text-align: center;
 }
 
@@ -100,14 +137,14 @@ input[type="submit"]:hover {
 }
 
 .success {
-    color:green;
+    color: green;
 }
 
 .continue-to-login {
     display: inline-block;
     padding: 10px 20px;
     background-color: rgb(96, 241, 96);
-    color:white;
+    color: white;
     text-align: center;
     text-decoration: none;
     border-radius: 5px;
@@ -118,12 +155,12 @@ input[type="submit"]:hover {
     background-color: darkgreen;
 }
 
-.form p{
+.form p {
     display: inline;
 }
 
 
-/* only for branch and division selection */ 
+/* only for branch and division selection */
 
 .form select {
     width: 100%;
@@ -133,34 +170,34 @@ input[type="submit"]:hover {
     border-radius: 0.5rem;
     background-color: #F3F4F6;
     color: #374151;
-  }
-  
-  /* Style the radio buttons and labels */
-  .form fieldset {
+}
+
+/* Style the radio buttons and labels */
+.form fieldset {
     border: none;
     padding: 0;
-  }
-  
-  .form fieldset legend {
+}
+
+.form fieldset legend {
     font-size: 1rem;
     font-weight: 500;
     margin-bottom: 0.5rem;
-  }
-  
-  .form fieldset div {
+}
+
+.form fieldset div {
     display: flex;
     align-items: center;
     margin-bottom: 0.5rem;
-  }
-  
-  .form fieldset input[type="radio"] {
+}
+
+.form fieldset input[type="radio"] {
     margin-right: 0.5rem;
     accent-color: #3B82F6;
-    height:1.5rem;
+    height: 1.5rem;
 
-  }
-  
-  .form fieldset label {
+}
+
+.form fieldset label {
     font-size: 1rem;
     color: #374151;
-  }
+}
