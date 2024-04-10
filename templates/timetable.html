@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Time Table
+{% endblock %}
+
+{% block main %}
+<table>
+    <thead>
+        <tr>
+            <th scope="col"> </th>
+            {% for row in data %}
+            <th scope="col">{{ row['time_slot'] }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in data %}
+        <!-- monday -->
+        <tr>
+            <th scope="row">k</th>
+            <td>1976</td>
+            <td>9</td>
+            <td>Ever fallen in love (with someone you shouldn't've)</td>
+        </tr>
+        <!-- tuesday -->
+        <tr>
+            <th scope="row">Buzzcocks</th>
+            <td>1976</td>
+            <td>9</td>
+            <td>Ever fallen in love (with someone you shouldn't've)</td>
+        </tr>
+        <!-- wednesday -->
+        <tr>
+            <th scope="row">Buzzcocks</th>
+            <td>1976</td>
+            <td>9</td>
+            <td>Ever fallen in love (with someone you shouldn't've)</td>
+        </tr>
+        <!-- thursday -->
+        <tr>
+            <th scope="row">Buzzcocks</th>
+            <td>1976</td>
+            <td>9</td>
+            <td>Ever fallen in love (with someone you shouldn't've)</td>
+        </tr>
+        <!-- friday -->
+        <tr>
+            <th scope="row">Buzzcocks</th>
+            <td>1976</td>
+            <td>9</td>
+            <td>Ever fallen in love (with someone you shouldn't've)</td>
+        </tr>
+        <!-- saturday -->
+        <tr>
+            <th scope="row">Buzzcocks</th>
+            <td>1976</td>
+            <td>9</td>
+            <td>Ever fallen in love (with someone you shouldn't've)</td>
+        </tr>
+    </tbody>
+</table>
+
+{% endblock %}
