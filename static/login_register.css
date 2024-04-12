@@ -59,7 +59,7 @@ body {
 
 form.form {
     display: table;
-    width: 50%;
+    width: 53%;
     /* height: 55%; */
     border-collapse: separate;
     border-spacing: 1.5rem;
@@ -93,7 +93,7 @@ div.form {
 input {
     display: table-cell;
     height: 2.5rem;
-    width: 100%;
+    width: calc(100% - 1rem);
     border: 0.05rem rgba(102, 102, 102, 0.35) solid;
     border-radius: 0.7rem;
     padding-left: 1rem;
@@ -173,7 +173,7 @@ input[type="submit"]:hover {
     border-radius: 0.5rem;
     background-color: #F3F4F6;
     color: #374151;
-    padding: 0.5rem 0.5rem 0.5rem 1rem;
+    padding: 0.5rem 0.5rem 0.5rem 0.9rem;
 }
 .flexbox2{
     display: flex;
