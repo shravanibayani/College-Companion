@@ -5,60 +5,49 @@ Time Table
 {% endblock %}
 
 {% block main %}
-<table>
-    <thead>
-        <tr>
-            <th scope="col"> </th>
-            {% for row in data %}
-            <th scope="col">{{ row['time_slot'] }}</th>
-            {% endfor %}
-        </tr>
-    </thead>
-    <tbody>
-        {% for row in data %}
-        <!-- monday -->
-        <tr>
-            <th scope="row">k</th>
-            <td>1976</td>
-            <td>9</td>
-            <td>Ever fallen in love (with someone you shouldn't've)</td>
-        </tr>
-        <!-- tuesday -->
-        <tr>
-            <th scope="row">Buzzcocks</th>
-            <td>1976</td>
-            <td>9</td>
-            <td>Ever fallen in love (with someone you shouldn't've)</td>
-        </tr>
-        <!-- wednesday -->
-        <tr>
-            <th scope="row">Buzzcocks</th>
-            <td>1976</td>
-            <td>9</td>
-            <td>Ever fallen in love (with someone you shouldn't've)</td>
-        </tr>
-        <!-- thursday -->
-        <tr>
-            <th scope="row">Buzzcocks</th>
-            <td>1976</td>
-            <td>9</td>
-            <td>Ever fallen in love (with someone you shouldn't've)</td>
-        </tr>
-        <!-- friday -->
-        <tr>
-            <th scope="row">Buzzcocks</th>
-            <td>1976</td>
-            <td>9</td>
-            <td>Ever fallen in love (with someone you shouldn't've)</td>
-        </tr>
-        <!-- saturday -->
-        <tr>
-            <th scope="row">Buzzcocks</th>
-            <td>1976</td>
-            <td>9</td>
-            <td>Ever fallen in love (with someone you shouldn't've)</td>
-        </tr>
-    </tbody>
-</table>
+<form action="/timetable_batch" method="post">
+    <fieldset>
+        <legend>Timetable for</legend>
+        <div>
+            <input type="radio" id="option1" name="batch" value="all" {% if batch==NONE %} checked {% endif %} />
+            <label for="option1">All</label>
 
+            <input type="radio" id="option2" name="batch" value="a1" {% if batch=='a1' %} checked {% endif %} />
+            <label for="option2">A1</label>
+
+            <input type="radio" id="option3" name="batch" value="a2" {% if batch=='a2' %} checked {% endif %} />
+            <label for="option3">A2</label>
+
+            <input type="radio" id="option4" name="batch" value="a3" {% if batch=='a3' %} checked {% endif %} />
+            <label for="option4">A3</label>
+        </div>
+        <div>
+            <button type="submit">Submit</button>
+        </div>
+    </fieldset>
+</form>
+
+<table>
+
+    <td>&nbsp;</td>
+    <td>Monday</td>
+    <td>Tuesday</td>
+    <td>Wednesday</td>
+    <td>Thursday</td>
+    <td>Friday</td>
+    <td>Saturday</td>
+
+    {% for time_slot in ['8:10 AM - 10:10 AM', '10:25 AM - 11:20 AM', '11:20 AM - 12:15 PM', '1:05 PM - 2:00 PM', '2:00 PM - 2:55 PM'] %}
+    <tr>
+        <td>{{ time_slot }}</td>
+        {% for day in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] %}
+        {% for item in time_table %}
+        {% if item.time_slot == time_slot and item.day == day %}
+        <td>{{ item.subject }} <br> {{ faculty_names[item.faculty] }}</td>
+        {% endif %}
+        {% endfor %}
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
 {% endblock %}

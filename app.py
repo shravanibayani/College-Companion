@@ -1,16 +1,17 @@
 from cs50 import SQL
+import pprint
 from flask import Flask, render_template, request, session, redirect
 from flask_session import Session
 from werkzeug.security import generate_password_hash, check_password_hash
 from helpers import login_required, check_password
 
-# Configuring the application 
+# Configuring the application
 app = Flask(__name__)
 
 # database
 db = SQL("sqlite:///database.db")
 
-# Configuring the session 
+# Configuring the session
 app.config["SESSION_PERMENENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
@@ -18,11 +19,12 @@ Session(app)
 # Allowed branches
 branches = ['csd']
 
-# Allowed divisions 
+# Allowed divisions
 divisions = ['A', 'B']
 
 # Allowed Years
-years = [1 , 2, 3, 4]
+years = [1, 2, 3, 4]
+
 
 @app.route("/")
 @login_required
@@ -40,12 +42,12 @@ def login():
         error = None
         if not username:
             error = "Please enter an username"
-        
+
         elif not password:
             error = "Please enter a password"
-        
+
         else:
-            rows = db.execute (
+            rows = db.execute(
                 "SELECT * FROM students WHERE username = ?", username
             )
 
@@ -54,7 +56,7 @@ def login():
             ):
                 error = "invalid username and/or password"
 
-        if error is None: 
+        if error is None:
             session["user_id"] = rows[0]["id"]
             return redirect("/")
         else:
@@ -106,7 +108,7 @@ def register():
         elif not year_int or year_int not in years:
             error = "Please choose a valid year"
         password_hash = generate_password_hash(password)
-        if error is None: 
+        if error is None:
             try:
                 db.execute(
                     "INSERT INTO students (username, password_hash, email, roll_no, branch, division, year) VALUES (?, ?, ?, ?, ?, ?, ?)",
@@ -125,7 +127,7 @@ def register():
             return render_template("register.html", error=error, success=success)
     else:
         return render_template("register.html")
-    
+
 
 @app.route("/logout")
 def logout():
@@ -136,7 +138,8 @@ def logout():
 # to-do list feature
 @app.route("/to-do")
 def to_do():
-    tasks = db.execute("SELECT * FROM todo WHERE student_id = ?", session['user_id'])
+    tasks = db.execute(
+        "SELECT * FROM todo WHERE student_id = ?", session['user_id'])
     task_number = 1
     return render_template("todo.html", tasks=tasks)
 
@@ -145,32 +148,79 @@ def to_do():
 @app.route("/add-to-do", methods=['POST'])
 def add_to_do():
     task = request.form.get("task")
-    db.execute("INSERT INTO todo (task, status, student_id) VALUES (?, ?, ?)", task, -1, session['user_id'])
+    db.execute("INSERT INTO todo (task, status, student_id) VALUES (?, ?, ?)",
+               task, -1, session['user_id'])
     return redirect("/to-do")
 
 
 # update task status route
 @app.route("/update/<int:task_id>")
 def update_to_do(task_id):
-    curr_status = db.execute("SELECT status FROM todo WHERE id = ? AND student_id = ?", task_id, session['user_id'])
+    curr_status = db.execute(
+        "SELECT status FROM todo WHERE id = ? AND student_id = ?", task_id, session['user_id'])
     new_status = -1 * curr_status[0]['status']
-    db.execute("UPDATE todo SET status = ? WHERE id = ? AND student_id = ?", new_status, task_id, session['user_id'])
+    db.execute("UPDATE todo SET status = ? WHERE id = ? AND student_id = ?",
+               new_status, task_id, session['user_id'])
     return redirect("/to-do")
 
 
 # delete task route
 @app.route("/delete/<int:task_id>")
 def delete_to_do(task_id):
-    db.execute("DELETE FROM todo WHERE id = ? AND student_id = ?", task_id, session['user_id'])
+    db.execute("DELETE FROM todo WHERE id = ? AND student_id = ?",
+               task_id, session['user_id'])
     return redirect("/to-do")
 
 
-# # timetable
-# @app.route("/timetable")
+# timetable
+@app.route("/timetable")
+def timetable():
+    student_id = session['user_id']
+    student_branch = db.execute(
+        "SELECT branch FROM students WHERE id = ?", student_id)[0]['branch']
+    roll_no = db.execute("SELECT roll_no FROM students WHERE id = ?", student_id)[
+                         0]['roll_no']
+    batch = None
+    if (roll_no < 27):
+        batch = 'a1'
+    elif (roll_no > 26 and roll_no < 53):
+        batch = 'a2'
+    elif (roll_no > 52 and roll_no < 78):
+        batch = 'a3'
+    time_table = db.execute(
+        "SELECT day, time_slot, subject, faculty FROM timetable WHERE (branch = ?) AND ((batch = ?) OR (batch = ?))", student_branch, batch, 'all')
+    faculty_data = db.execute(
+        "SELECT id, name FROM faculty WHERE branch = ?", student_branch
+    )
+    faculty_names = {}
+
+    for item in faculty_data:
+        faculty_names[item['id']] = item['name']
+
+    pp = pprint.PrettyPrinter(indent=4)
+    pp.pprint(faculty_names)
+    pp.pprint(time_table)
+    return render_template("timetable.html", batch=batch, time_table = time_table, faculty_names = faculty_names)
 
 
+# timetable batch switcher
+@app.route("/timetable_batch", methods=['POST'])
+def timetable_batch():
+    student_id = session['user_id']
+    student_branch = db.execute(
+        "SELECT branch FROM students WHERE id = ?", student_id)[0]['branch']
+    batch = request.form.get('batch')
+    time_table = db.execute(
+        "SELECT day, time_slot, subject, faculty FROM timetable WHERE (branch = ?) AND ((batch = ?) OR (batch = ?))", student_branch, batch, 'all')
+    faculty_data = db.execute(
+        "SELECT id, name FROM faculty WHERE branch = ?", student_branch
+    )
+    faculty_names = {}
 
+    for item in faculty_data:
+        faculty_names[item['id']] = item['name']
 
+    return render_template("timetable.html", batch=batch, time_table = time_table, faculty_names = faculty_names)
 
 
 if __name__ == '__main__':
