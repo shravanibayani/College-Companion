@@ -63,7 +63,6 @@ form.form {
     /* height: 55%; */
     border-collapse: separate;
     border-spacing: 1.5rem;
-
 }
 
 .flexbox {
@@ -103,9 +102,8 @@ input::placeholder{
     font-size: 1rem;
 }
 .rollNo {
-    width: 10%;
+    width: 50%;
     height:2rem;
-    margin-left: 1rem;
 }
 
 .form p {
@@ -170,12 +168,12 @@ input[type="submit"]:hover {
 
 .form select {
     width: 100%;
-    padding: 0.5rem;
     font-size: 1rem;
     border: 0.05rem solid #D1D5DB;
     border-radius: 0.5rem;
     background-color: #F3F4F6;
     color: #374151;
+    padding: 0.5rem 0.5rem 0.5rem 1rem;
 }
 .flexbox2{
     display: flex;
