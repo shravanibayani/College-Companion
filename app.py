@@ -144,6 +144,7 @@ def logout():
 
 # to-do list feature
 @app.route("/to-do")
+@login_required
 def to_do():
     tasks = db.execute(
         "SELECT * FROM todo WHERE student_id = ?", session['user_id'])
@@ -153,6 +154,7 @@ def to_do():
 
 # add to-do route
 @app.route("/add-to-do", methods=['POST'])
+@login_required
 def add_to_do():
     task = request.form.get("task")
     db.execute("INSERT INTO todo (task, status, student_id) VALUES (?, ?, ?)",
@@ -162,6 +164,7 @@ def add_to_do():
 
 # update task status route
 @app.route("/update/<int:task_id>")
+@login_required
 def update_to_do(task_id):
     curr_status = db.execute(
         "SELECT status FROM todo WHERE id = ? AND student_id = ?", task_id, session['user_id'])
@@ -173,6 +176,7 @@ def update_to_do(task_id):
 
 # delete task route
 @app.route("/delete/<int:task_id>")
+@login_required
 def delete_to_do(task_id):
     db.execute("DELETE FROM todo WHERE id = ? AND student_id = ?",
                task_id, session['user_id'])
@@ -181,6 +185,7 @@ def delete_to_do(task_id):
 
 # timetable
 @app.route("/timetable")
+@login_required
 def timetable():
     student_id = session['user_id']
     student_branch = db.execute(
@@ -212,6 +217,7 @@ def timetable():
 
 # timetable batch switcher
 @app.route("/timetable_batch", methods=['POST'])
+@login_required
 def timetable_batch():
     student_id = session['user_id']
     student_branch = db.execute(
