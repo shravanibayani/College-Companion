@@ -3,17 +3,17 @@ let sidebar_elements_text = document.querySelectorAll(".e");
 let sidebar_elements = document.querySelectorAll(".e1");
 let special = document.querySelectorAll(".special");
 let add_button = document.querySelector(".add-button");
-sidebar_elements.forEach(element => {
-    element.style.display = "none";
-})
-task.forEach(element => {
-    let children = element.children;
-    for (let i = 0; i < children.length; i++) {
-        children[i].style.display = "flex";
-        children[i].style.justifyContent = "center";
-        children[i].style.alignItems = "center";
-    }
-});
+// sidebar_elements.forEach(element => {
+//     element.style.display = "none";
+// })
+// task.forEach(element => {
+//     let children = element.children;
+//     for (let i = 0; i < children.length; i++) {
+//         children[i].style.display = "flex";
+//         children[i].style.justifyContent = "center";
+//         children[i].style.alignItems = "center";
+//     }
+// });
 
 let prev = null;
 sidebar_elements_text.forEach((element, index) => {

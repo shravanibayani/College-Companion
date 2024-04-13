@@ -174,82 +174,10 @@ side-bar {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
-.add-new-task {
-    height: 2.5rem;
-    width: 25.5rem;
-    border: 0.15rem #D1D5DB solid;
-    border-radius: 0.5rem;
-    color: #B2B2B2;
-    line-height: 2.5rem;
-    font-size: 1.1rem;
-    font-weight: 400;
-    margin-right: 1.5rem;
-    padding-left: 1rem;
-}
 
-.add-button {
-    height: 2.5rem;
-    width: 6.5rem;
-    border-radius: 0.25rem;
-    border: none;
-    background-color: #3B82F6;
-    color: white;
-    font-size: 1rem;
-    cursor: pointer;
-}
-
-.add-button:hover {
-    background-color: #06347D;
-}
-
-.to-do-list span {
-    color: #374151;
-    font-weight: 500;
-    font-size: 1.1rem;
-}
-
-.tasks {
-    display: grid;
-    row-gap: 1rem;
-}
-
-.task {
-    width: 27rem;
-    border: 0.1rem #374151 solid;
-    border-radius: 0.3rem;
-    display: grid;
-    grid-template-columns: 0.5fr 4fr 1fr;
-    grid-auto-rows: minmax(2.5rem, auto)
-}
-
-.task i {
-    font-size: 1.2rem;
-}
-
-.completed-tasks .task {
-    background-color: rgb(108, 247, 95);
-}
-
-.check {
-    width: 1.2rem;
-    height: 1.2rem;
-}
-
-.remaining-tasks {
-    margin-top: 3rem;
-}
-
-.completed-tasks {
-    margin-top: 10rem;
-}
-
-.tasks {
-    margin-top: 1rem;
-    height: 2rem;
-    width: 10rem;
-}
 
 .sem {
     display: flex;
