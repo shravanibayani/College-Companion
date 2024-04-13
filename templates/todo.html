@@ -5,8 +5,6 @@ To-Do
 {% endblock %}
 
 {% block main %}
-
-
 <div class="add-task-area">
     <form method="post" action="/add-to-do" class="add-task">
         <input type="text" name="task" placeholder="Enter to do..." autocomplete="off" autofocus required />
@@ -29,6 +27,26 @@ To-Do
             <a href="/delete/{{ task['id'] }}" class="task-delete">Delete</a>
         </div>
     </div>
+    {% endif %}
+    {% endfor %}
+</div>
+<div class="todo-list">
+    <p>Completed</p>
+    {% for task in tasks %}
+    <div class="todo-item">
+        {% if task['status'] == 1 %}
+        {{ task['task'] }}
+    </div>
+    <div class="task-status">
+        {% if task['status'] == 1 %}
+        <span>Completed</span>
+        {% else %}
+        <span>Not Completed</span>
+        {% endif %}
+        <a href="/update/{{ task['id'] }}" class="task-update">Update</a>
+        <a href="/delete/{{ task['id'] }}" class="task-delete">Delete</a>
+    </div>
+    {% endif %}
     {% endfor %}
 </div>
 {% endblock %}
