@@ -11,42 +11,56 @@ To-Do
         <button type="submit">Add</button>
     </form>
 </div>
-<div class="todo-list-tasks">
-    {% for task in tasks %}
-    <div class="task">
-        <div class="todo-item">
-            {{ task['task'] }}
+<div>
+    <div>
+        <p>TO DO</p>
+        {% for task in tasks %}
+        <div>
+            {{ set c = false }}
+            <div>
+                {% if task['status'] == -1 %}
+                {{ task['task'] }}
+                {{ set c = true }}
+                {% endif %}
+            </div>
+            <div>
+                {% if c %}
+                {% if task['status'] == 1 %}
+                <span>Completed</span>
+                {% else %}
+                <span>Not Completed</span>
+                {% endif %}
+                <a href="/update/{{ task['id'] }}">Update</a>
+                <a href="/delete/{{ task['id'] }}">Delete</a>
+                {% endif %}
+            </div>
         </div>
-        <div class="task-status">
-            {% if task['status'] == 1 %}
-            <span>Completed</span>
-            {% else %}
-            <span>Not Completed</span>
-            {% endif %}
-            <a href="/update/{{ task['id'] }}" class="task-update">Update</a>
-            <a href="/delete/{{ task['id'] }}" class="task-delete">Delete</a>
+        {% endfor %}
+    </div>
+    <div>
+        <p>Completed</p>
+        {% for task in tasks %}
+        <div>
+            {{ set c = false }}
+            <div>
+                {% if task['status'] == 1 %}
+                {{ task['task'] }}
+                {{ set c = true }}
+                {% endif %}
+            </div>
+            <div>
+                {% if c %}
+                {% if task['status'] == 1 %}
+                <span>Completed</span>
+                {% else %}
+                <span>Not Completed</span>
+                {% endif %}
+                <a href="/update/{{ task['id'] }}">Update</a>
+                <a href="/delete/{{ task['id'] }}">Delete</a>
+                {% endif %}
+            </div>
         </div>
+        {% endfor %}
     </div>
-    {% endif %}
-    {% endfor %}
-</div>
-<div class="todo-list">
-    <p>Completed</p>
-    {% for task in tasks %}
-    <div class="todo-item">
-        {% if task['status'] == 1 %}
-        {{ task['task'] }}
-    </div>
-    <div class="task-status">
-        {% if task['status'] == 1 %}
-        <span>Completed</span>
-        {% else %}
-        <span>Not Completed</span>
-        {% endif %}
-        <a href="/update/{{ task['id'] }}" class="task-update">Update</a>
-        <a href="/delete/{{ task['id'] }}" class="task-delete">Delete</a>
-    </div>
-    {% endif %}
-    {% endfor %}
 </div>
 {% endblock %}

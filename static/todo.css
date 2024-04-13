@@ -39,8 +39,10 @@
 .add-task button:hover {
     background-color: #06347D;
 }
-
-.todo-list-tasks {
+.todo-list{
+    
+}
+.todo-tasks {
     margin-top: 5rem;
     max-height: 70%;
     width: 30rem;
@@ -57,7 +59,6 @@
     border-radius: 0.3rem;
     display: flex;
     justify-content: space-between;
-
 }
 
 .todo-item{
