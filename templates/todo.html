@@ -10,8 +10,10 @@ To-Do
     <button type="submit">Add</button>
 </form>
 <div class="todo-list">
+    <p>To-Do</p>
     {% for task in tasks %}
     <div class="todo-item">
+        {% if task['status'] == -1 %}
         {{ task['task'] }}
     </div>
     <div class="task-status">
@@ -23,6 +25,26 @@ To-Do
         <a href="/update/{{ task['id'] }}" class="task-update">Update</a>
         <a href="/delete/{{ task['id'] }}" class="task-delete">Delete</a>
     </div>
+    {% endif %}
+    {% endfor %}
+</div>
+<div class="todo-list">
+    <p>Completed</p>
+    {% for task in tasks %}
+    <div class="todo-item">
+        {% if task['status'] == 1 %}
+        {{ task['task'] }}
+    </div>
+    <div class="task-status">
+        {% if task['status'] == 1 %}
+        <span>Completed</span>
+        {% else %}
+        <span>Not Completed</span>
+        {% endif %}
+        <a href="/update/{{ task['id'] }}" class="task-update">Update</a>
+        <a href="/delete/{{ task['id'] }}" class="task-delete">Delete</a>
+    </div>
+    {% endif %}
     {% endfor %}
 </div>
 {% endblock %}
