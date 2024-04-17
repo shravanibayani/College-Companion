@@ -236,5 +236,36 @@ def timetable_batch():
     return render_template("timetable.html", batch=batch, time_table = time_table, faculty_names = faculty_names)
 
 
+# study buddy
+@app.route("/studybuddy/<int:id>")
+@login_required
+def studybuddy(id):
+    if id == 1:
+        return render_template("sem1.html")
+    elif id == 2:
+        return render_template("sem2.html")
+    elif id == 2.1:
+        file_path = ''
+    elif id == 2.2:
+        return render_template("sem2.html")
+    elif id == 2.3:
+        return render_template("sem2.html")
+    elif id == 2.4:
+        return render_template("sem2.html")
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
