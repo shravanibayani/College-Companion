@@ -1,6 +1,7 @@
+from datetime import datetime
 from cs50 import SQL
 import pprint
-from flask import Flask, render_template, request, session, redirect
+from flask import Flask, jsonify, render_template, request, session, redirect, url_for
 from flask_session import Session
 from werkzeug.security import generate_password_hash, check_password_hash
 from helpers import login_required, check_password
@@ -190,17 +191,30 @@ def timetable():
     student_id = session['user_id']
     student_branch = db.execute(
         "SELECT branch FROM students WHERE id = ?", student_id)[0]['branch']
-    roll_no = db.execute("SELECT roll_no FROM students WHERE id = ?", student_id)[
-                         0]['roll_no']
-    batch = None
-    if (roll_no < 27):
-        batch = 'a1'
-    elif (roll_no > 26 and roll_no < 53):
-        batch = 'a2'
-    elif (roll_no > 52 and roll_no < 78):
-        batch = 'a3'
+    roll_number = int(db.execute(
+        "SELECT roll_no FROM students WHERE id = ?", student_id)[0]['roll_no'])
+    if roll_number <= 26:
+        student_batch = 'a1'
+    elif roll_number >= 27 and roll_number <= 52:
+        student_batch = 'a2'
+    elif roll_number >= 53 and roll_number <= 77:
+        student_batch = 'a3'
+    else:
+        student_batch = 'all'
+
+    batch = request.args.get('batch', student_batch)
+    current_date = datetime.now()
+    current_day = current_date.strftime('%A')
+    current_time = datetime.now().time()
+
+    if current_day == "Sunday":
+        day = request.args.get('day', 'Monday')
+    else:
+        day = request.args.get('day', current_day)
+    
     time_table = db.execute(
-        "SELECT day, time_slot, subject, faculty FROM timetable WHERE (branch = ?) AND ((batch = ?) OR (batch = ?))", student_branch, batch, 'all')
+        "SELECT time_slot, subject, faculty FROM timetable WHERE (branch = ?) AND (batch = ? OR batch = ?) AND (day = ?)", student_branch, batch, 'all', day)
+    
     faculty_data = db.execute(
         "SELECT id, name FROM faculty WHERE branch = ?", student_branch
     )
@@ -209,31 +223,38 @@ def timetable():
     for item in faculty_data:
         faculty_names[item['id']] = item['name']
 
-    pp = pprint.PrettyPrinter(indent=4)
-    pp.pprint(faculty_names)
-    pp.pprint(time_table)
-    return render_template("timetable.html", batch=batch, time_table = time_table, faculty_names = faculty_names)
+    return render_template("timetable.html", batch=batch, day=day, time_table=time_table, faculty_names=faculty_names, current_time=current_time, datetime=datetime)
 
 
 # timetable batch switcher
-@app.route("/timetable_batch", methods=['POST'])
+@app.route("/timetable_batch")
 @login_required
 def timetable_batch():
     student_id = session['user_id']
     student_branch = db.execute(
         "SELECT branch FROM students WHERE id = ?", student_id)[0]['branch']
-    batch = request.form.get('batch')
-    time_table = db.execute(
-        "SELECT day, time_slot, subject, faculty FROM timetable WHERE (branch = ?) AND ((batch = ?) OR (batch = ?))", student_branch, batch, 'all')
-    faculty_data = db.execute(
-        "SELECT id, name FROM faculty WHERE branch = ?", student_branch
-    )
-    faculty_names = {}
+    
+    roll_number = int(db.execute(
+        "SELECT roll_no FROM students WHERE id = ?", student_id)[0]['roll_no'])
+    if roll_number <= 26:
+        student_batch = 'a1'
+    elif roll_number >= 27 and roll_number <= 52:
+        student_batch = 'a2'
+    elif roll_number >= 53 and roll_number <= 77:
+        student_batch = 'a3'
+    else:
+        student_batch = 'all'
 
-    for item in faculty_data:
-        faculty_names[item['id']] = item['name']
+    batch = request.args.get('batch', student_batch)
 
-    return render_template("timetable.html", batch=batch, time_table = time_table, faculty_names = faculty_names)
+    current_date = datetime.now()
+    current_day = current_date.strftime('%A')
+    
+    if current_day == "Sunday":
+        day = request.args.get('day', 'Monday')
+    else:
+        day = request.args.get('day', current_day)
+    return redirect(url_for('timetable', batch=batch, day=day))
 
 
 # study buddy
