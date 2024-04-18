@@ -64,7 +64,7 @@ Time Table
             {% set start_time, end_time = item.time_slot.split(' - ') %}
             {% set start_time_obj = datetime.strptime(start_time, '%I:%M %p').time() %}
             {% set end_time_obj = datetime.strptime(end_time, '%I:%M %p').time() %}
-            <tr {% if current_time >= start_time_obj and current_time <= end_time_obj %} class="bg-yellow-200" {% endif %}>
+            <tr {% if current_time >= start_time_obj and current_time <= end_time_obj and day == current_day%} class="bg-yellow-200" {% endif %}>
                 <td class="border px-4 py-2">{{ item.time_slot }}</td>
                 <td class="border px-4 py-2">{{ item.subject }} <br> {{ faculty_names[item.faculty] }}</td>
             </tr>

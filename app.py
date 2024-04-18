@@ -223,7 +223,7 @@ def timetable():
     for item in faculty_data:
         faculty_names[item['id']] = item['name']
 
-    return render_template("timetable.html", batch=batch, day=day, time_table=time_table, faculty_names=faculty_names, current_time=current_time, datetime=datetime)
+    return render_template("timetable.html", batch=batch, day=day, time_table=time_table, faculty_names=faculty_names, current_time=current_time, datetime=datetime, current_day=current_day)
 
 
 # timetable batch switcher
