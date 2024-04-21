@@ -1,4 +1,0 @@
-database.db
-flask_session/
-__pycache__/
-*.pyc

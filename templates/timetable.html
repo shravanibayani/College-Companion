@@ -4,50 +4,72 @@
 Time Table
 {% endblock %}
 
+{% block head %}
+{{ super() }}
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<style>
+    .batch-selector a {
+        display: inline-block;
+        margin-right: 10px;
+        padding: 5px 10px;
+        text-decoration: none;
+        color: #333;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
+
+    .batch-selector a.active {
+        background-color: #007bff;
+        color: white;
+        border-color: #007bff;
+    }
+
+    .day-selector a {
+        display: inline-block;
+        margin-right: 10px;
+        padding: 5px 10px;
+        text-decoration: none;
+        color: #333;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
+
+    .day-selector a.active {
+        background-color: #007bff;
+        color: white;
+        border-color: #007bff;
+    }
+</style>
+{% endblock %}
+
 {% block main %}
-<form action="/timetable_batch" method="post">
-    <fieldset>
-        <legend>Timetable for</legend>
-        <div>
-            <input type="radio" id="option1" name="batch" value="all" {% if batch==NONE %} checked {% endif %} />
-            <label for="option1">All</label>
-
-            <input type="radio" id="option2" name="batch" value="a1" {% if batch=='a1' %} checked {% endif %} />
-            <label for="option2">A1</label>
-
-            <input type="radio" id="option3" name="batch" value="a2" {% if batch=='a2' %} checked {% endif %} />
-            <label for="option3">A2</label>
-
-            <input type="radio" id="option4" name="batch" value="a3" {% if batch=='a3' %} checked {% endif %} />
-            <label for="option4">A3</label>
-        </div>
-        <div>
-            <button type="submit">Submit</button>
-        </div>
-    </fieldset>
-</form>
-
-<table>
-
-    <td>&nbsp;</td>
-    <td>Monday</td>
-    <td>Tuesday</td>
-    <td>Wednesday</td>
-    <td>Thursday</td>
-    <td>Friday</td>
-    <td>Saturday</td>
-
-    {% for time_slot in ['8:10 AM - 10:10 AM', '10:25 AM - 11:20 AM', '11:20 AM - 12:15 PM', '1:05 PM - 2:00 PM', '2:00 PM - 2:55 PM'] %}
-    <tr>
-        <td>{{ time_slot }}</td>
-        {% for day in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] %}
-        {% for item in time_table %}
-        {% if item.time_slot == time_slot and item.day == day %}
-        <td>{{ item.subject }} <br> {{ faculty_names[item.faculty] }}</td>
-        {% endif %}
-        {% endfor %}
-        {% endfor %}
-    </tr>
-    {% endfor %}
-</table>
+<div class="container mx-auto px-4 py-8">
+    <div class="batch-selector mb-4">
+        <a href="/timetable_batch?batch=all&day={{ day }}" class="{% if batch=='all' %}active{% endif %}">All</a>
+        <a href="/timetable_batch?batch=a1&day={{ day }}" class="{% if batch=='a1' %}active{% endif %}">A1</a>
+        <a href="/timetable_batch?batch=a2&day={{ day }}" class="{% if batch=='a2' %}active{% endif %}">A2</a>
+        <a href="/timetable_batch?batch=a3&day={{ day }}" class="{% if batch=='a3' %}active{% endif %}">A3</a>
+    </div>
+    <div class="day-selector mb-4">
+        <a href="/timetable_batch?batch={{ batch }}&day=Monday" class="{% if day=='Monday' %}active{% endif %}">Monday</a>
+        <a href="/timetable_batch?batch={{ batch }}&day=Tuesday" class="{% if day=='Tuesday' %}active{% endif %}">Tuesday</a>
+        <a href="/timetable_batch?batch={{ batch }}&day=Wednesday" class="{% if day=='Wednesday' %}active{% endif %}">Wednesday</a>
+        <a href="/timetable_batch?batch={{ batch }}&day=Thursday" class="{% if day=='Thursday' %}active{% endif %}">Thursday</a>
+        <a href="/timetable_batch?batch={{ batch }}&day=Friday" class="{% if day=='Friday' %}active{% endif %}">Friday</a>
+        <a href="/timetable_batch?batch={{ batch }}&day=Saturday" class="{% if day=='Saturday' %}active{% endif %}">Saturday</a>
+    </div>
+    <table class="w-full text-left">
+        <tbody>
+            {% for item in time_table %}
+            {% set start_time, end_time = item.time_slot.split(' - ') %}
+            {% set start_time_obj = datetime.strptime(start_time, '%I:%M %p').time() %}
+            {% set end_time_obj = datetime.strptime(end_time, '%I:%M %p').time() %}
+            <tr {% if current_time >= start_time_obj and current_time <= end_time_obj and day == current_day%} class="bg-yellow-200" {% endif %}>
+                <td class="border px-4 py-2">{{ item.time_slot }}</td>
+                <td class="border px-4 py-2">{{ item.subject }} <br> {{ faculty_names[item.faculty] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

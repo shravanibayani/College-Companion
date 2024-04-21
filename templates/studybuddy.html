@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Study Buddy
+{% endblock %}
+
+{% block main %}
+
+<a href="{{ url_for('studybuddy', id=1)}}">Semester 1</a>
+<a href="{{ url_for('studybuddy', id=2)}}">Semester 2</a>
+
+{% endblock %}
