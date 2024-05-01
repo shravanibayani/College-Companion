@@ -1,0 +1,12 @@
+# git ignore file for this flask project
+/_pycache_
+/.vscode 
+/flask_session
+database.db
+/download
+timetable.csv
+notes.csv
+faculty.csv
+*.csv
+*.db
+*.sqlite3
