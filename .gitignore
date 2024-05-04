@@ -3,9 +3,7 @@
 /.vscode 
 /flask_session
 database.db
-/download
 timetable.csv
-notes.csv
 faculty.csv
 *.csv
 *.db
