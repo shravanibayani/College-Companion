@@ -1,21 +1,26 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from cs50 import SQL
 import pprint
-from flask import Flask, jsonify, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for
 from flask_session import Session
 from werkzeug.security import generate_password_hash, check_password_hash
 from helpers import login_required, check_password
+from flask import send_file
+import os
 
 # Configuring the application
 app = Flask(__name__)
 
+
 # database
 db = SQL("sqlite:///database.db")
+
 
 # Configuring the session
 app.config["SESSION_PERMENENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
+
 
 @app.after_request
 def add_header(response):
@@ -23,6 +28,7 @@ def add_header(response):
     response.headers["Pragma"] = "no-cache"
     response.headers["Expires"] = "0"
     return response
+
 
 # Allowed branches
 branches = ['csd']
@@ -32,6 +38,14 @@ divisions = ['A', 'B']
 
 # Allowed Years
 years = [1, 2, 3, 4]
+
+# Allowed Subjects
+subjects = {'ads':'Advanced Data Structures',
+                'cn': 'Computer Networks',
+                'sepm' : 'Software Engineering and Project Management',
+                'os': 'Operating Systems',
+                'm3' : 'Applied Mathematics - III',
+                'cst' : 'Client Side Technology'}
 
 
 @app.route("/")
@@ -76,6 +90,8 @@ def login():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
+        first_name = request.form.get("firstName")
+        last_name = request.form.get("lastName")
         username = request.form.get("username")
         password = request.form.get("password")
         email = request.form.get("email")
@@ -91,6 +107,10 @@ def register():
             error = "Please enter a username"
         elif not password:
             error = "Please enter a password"
+        elif not first_name:
+            error = "Please enter your first name"
+        elif not last_name:
+            error = "Please enter your last name"
         elif not check_password(password):
             error = "Password doesn't meet requirements"
         elif not confirmation:
@@ -119,7 +139,9 @@ def register():
         if error is None:
             try:
                 db.execute(
-                    "INSERT INTO students (username, password_hash, email, roll_no, branch, division, year) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                    "INSERT INTO students (first_name, last_name, username, password_hash, email, roll_no, branch, division, year) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                    first_name,
+                    last_name,
                     username,
                     password_hash,
                     email,
@@ -211,10 +233,10 @@ def timetable():
         day = request.args.get('day', 'Monday')
     else:
         day = request.args.get('day', current_day)
-    
+
     time_table = db.execute(
         "SELECT time_slot, subject, faculty FROM timetable WHERE (branch = ?) AND (batch = ? OR batch = ?) AND (day = ?)", student_branch, batch, 'all', day)
-    
+
     faculty_data = db.execute(
         "SELECT id, name FROM faculty WHERE branch = ?", student_branch
     )
@@ -233,7 +255,7 @@ def timetable_batch():
     student_id = session['user_id']
     student_branch = db.execute(
         "SELECT branch FROM students WHERE id = ?", student_id)[0]['branch']
-    
+
     roll_number = int(db.execute(
         "SELECT roll_no FROM students WHERE id = ?", student_id)[0]['roll_no'])
     if roll_number <= 26:
@@ -249,7 +271,7 @@ def timetable_batch():
 
     current_date = datetime.now()
     current_day = current_date.strftime('%A')
-    
+
     if current_day == "Sunday":
         day = request.args.get('day', 'Monday')
     else:
@@ -258,34 +280,137 @@ def timetable_batch():
 
 
 # study buddy
-@app.route("/studybuddy/<int:id>")
+@app.route("/studybuddy")
 @login_required
-def studybuddy(id):
-    if id == 1:
-        return render_template("sem1.html")
-    elif id == 2:
-        return render_template("sem2.html")
-    elif id == 2.1:
-        file_path = ''
-    elif id == 2.2:
-        return render_template("sem2.html")
-    elif id == 2.3:
-        return render_template("sem2.html")
-    elif id == 2.4:
-        return render_template("sem2.html")
+def studybuddy():
+    sem = int(request.args.get('sem', 0))
+    return render_template('studybuddy.html', sem=sem)
+
+
+# syllabus
+@app.route("/syllabus")
+@login_required
+def syllabus_download():
+    sem = request.args.get('sem')
+    student_id = session['user_id']
+    student_branch = db.execute(
+        "SELECT branch FROM students WHERE id = ?", student_id)[0]['branch']
+    student_division = db.execute(
+        "SELECT division FROM students WHERE id = ?", student_id)[0]['division']
+    student_year = db.execute(
+        "SELECT year FROM students WHERE id = ?", student_id)[0]['year']
+    file_path = db.execute(
+        "SELECT file_path FROM notes WHERE (branch = ?) AND (div = ?) AND (year = ?) AND (unit = ?) AND (subject = ?)", student_branch, student_division, student_year, sem, "syllabus")[0]['file_path']
+    if file_path:
+        return send_file(file_path, as_attachment=True)
+    else:
+        return render_template('apology.html')
+
+
+# notes
+@app.route("/notes")
+@login_required
+def notes():
+    student_id = session['user_id']
+    stduent_username = db.execute(
+        "SELECT username FROM students WHERE id = ?", student_id)[0]['username']
+    student_branch = db.execute(
+        "SELECT branch FROM students WHERE id = ?", student_id)[0]['branch']
+    student_division = db.execute(
+        "SELECT division FROM students WHERE id = ?", student_id)[0]['division']
+    student_year = db.execute(
+        "SELECT year FROM students WHERE id = ?", student_id)[0]['year']
+    notes = db.execute(
+        "SELECT id, subject, unit, uploaded_by, file_path FROM notes WHERE (branch = ?) AND (div = ?) AND (year = ?)", student_branch, student_division, student_year)
     
+    # pretty print the notes 
+    # pprint.pp(notes)
+
+    unique_subjects = {}
+    for note in notes:
+        unique_subjects[note['subject']] = None
+    unique_subject_list = list(unique_subjects.keys())
+    unique_subject_list.remove('syllabus')
+    subject_requested = request.args.get('subject')
+    requested_unit = request.args.get('unit')
+
+    if subject_requested in unique_subject_list:
+        requested_notes = [note for note in notes if note['subject'] == subject_requested]
+        if requested_unit and requested_unit in ['0', '1', '2', '3', '4', '5']:
+            notes_filtered = [note for note in requested_notes if note['unit'] == requested_unit]
+            for note in notes_filtered:
+                note['file_name'] = os.path.basename(note['file_path'])
+            print("Requested Notes: ")
+            # pprint.pp(requested_notes)
+            print("Filtered Notes: ")
+            # pprint.pp(notes_filtered)
+            print("Requested Unit: "+ str(requested_unit))
+            if requested_unit == '0':
+                requested_unit = 'Reference'
+            return render_template('subject.html', notes_filtered=notes_filtered, subjects=subjects, subject_requested=subject_requested, requested_unit=requested_unit, student_username=stduent_username)
+        else:
+            return render_template('subject.html', subjects=subjects, subject_requested=subject_requested)
+    else:
+        return render_template('notes.html', unique_subjects=unique_subject_list, subjects=subjects)
 
 
+# notes download
+@app.route("/notes_download")
+@login_required
+def notes_download():
+    file_path = request.args.get('file_path')
+    response = send_file(file_path, as_attachment=True)
+    return response
 
 
+# notes upload
+@app.route("/upload", methods=['POST'])
+@login_required
+def notes_upload():
+    student_id = session['user_id']
+    stduent_username = db.execute(
+        "SELECT username FROM students WHERE id = ?", student_id)[0]['username']
+    student_branch = db.execute(
+        "SELECT branch FROM students WHERE id = ?", student_id)[0]['branch']
+    student_division = db.execute(
+        "SELECT division FROM students WHERE id = ?", student_id)[0]['division']
+    student_year = db.execute(
+        "SELECT year FROM students WHERE id = ?", student_id)[0]['year']
+    file = request.files['file']
+    file_name = file.filename
+    file_path = os.path.join('upload',file_name)
+    file.save(file_path)
+    # print("File Name: " + file_name)
+    subject = request.args.get('subject')
+    unit = request.args.get('unit')
+    if unit == 'Reference':
+        unit = '0'
+    # print("upload unit: " + unit)
+    db.execute("INSERT INTO notes (subject, unit, uploaded_by, file_path, branch, div, year) VALUES (?, ?, ?, ?, ?, ?, ?)",
+               subject, unit, stduent_username, file_path, student_branch, student_division, student_year)
+    return redirect(request.referrer)
 
 
+# notes delete
+@app.route('/delete')
+@login_required
+def delete_notes():
+    notes_id = int(request.args.get('notes_id'))
+    file_path = db.execute("SELECT file_path FROM notes WHERE id = ?", notes_id)[0]['file_path']
+    db.execute("DELETE FROM notes WHERE id = ?", notes_id)
+    os.remove(file_path)
+    return redirect(request.referrer)
 
 
-
-
-
-
+# faculty
+@app.route("/faculty")
+@login_required
+def faculty():
+    student_id = session['user_id']
+    student_branch = db.execute(
+        "SELECT branch FROM students WHERE id = ?", student_id)[0]['branch']
+    faculty = db.execute("SELECT * FROM faculty WHERE branch = ?", student_branch)
+    return render_template("faculty.html", faculty=faculty, subjects=subjects)
 
 
 if __name__ == '__main__':
