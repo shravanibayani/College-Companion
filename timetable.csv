@@ -1,36 +1,36 @@
 ﻿id,day,time_slot,subject,faculty,batch,branch
 1,Monday,8:10 AM - 10:10 AM,ADS Lab,is,a1,csd
 2,Monday,8:10 AM - 10:10 AM,CN Lab,jsh,a2,csd
-2,Monday,8:10 AM - 10:10 AM,Free Slot,,a3,csd
-3,Monday,10:25 AM - 11:20 AM,ADS,is,all,csd
-4,Monday,11:20 AM - 12:15 PM,AM - III,rp,all,csd
-5,Monday,1:05 PM - 2:00 PM,OS,jk,all,csd
-6,Monday,2:00 PM - 2:55 PM,SEPM,stp,all,csd
-7,Tuesday,8:10 AM - 10:10 AM,Free Slot,,a1,csd
-7,Tuesday,8:10 AM - 10:10 AM,ADS Lab,is,a2,csd
-8,Tuesday,8:10 AM - 10:10 AM,CN Lab,jsh,a3,csd
-9,Tuesday,10:25 AM - 11:20 AM,ADS,is,all,csd
-10,Tuesday,11:20 AM - 12:15 PM,AM - III,rp,all,csd
-11,Tuesday,1:05 PM - 2:00 PM,OS,jk,all,csd
-12,Tuesday,2:00 PM - 2:55 PM,SEPM,stp,all,csd
-13,Wednesday,8:10 AM - 10:10 AM,ADS Lab,is,a3,csd
-13,Wednesday,8:10 AM - 10:10 AM,Free Slot,,a2,csd
-14,Wednesday,8:10 AM - 10:10 AM,CN Lab,jsh,a1,csd
-15,Wednesday,10:25 AM - 11:20 AM,CN,jsh,all,csd
-16,Wednesday,11:20 AM - 12:15 PM,AM - III,rp,all,csd
-17,Wednesday,1:05 PM - 2:00 PM,OS,jk,all,csd
-18,Wednesday,2:00 PM - 2:55 PM,SEPM,stp,all,csd
-19,Thursday,8:10 AM - 10:10 AM,ADS Lab,is,a1,csd
-20,Thursday,8:10 AM - 10:10 AM,PBL Lab,yp,a2,csd
-21,Thursday,8:10 AM - 10:10 AM,OS Lab,jk,a3,csd
-22,Thursday,10:25 AM - 11:20 AM,AM - III Tutorial,rp,all,csd
-23,Thursday,11:20 AM - 12:15 PM,ADS,is,all,csd
-24,Friday,8:10 AM - 10:10 AM,ADS Lab,is,a2,csd
-25,Friday,8:10 AM - 10:10 AM,PBL Lab,yp,a3,csd
-26,Friday,8:10 AM - 10:10 AM,OS Lab,jk,a1,csd
-27,Friday,10:25 AM - 11:20 AM,CN,jsh,all,csd
-28,Friday,11:20 AM - 12:15 PM,CST,yp,all,csd
-29,Saturday,8:10 AM - 10:10 AM,ADS Lab,is,a3,csd
-30,Saturday,8:10 AM - 10:10 AM,PBL Lab,yp,a1,csd
-31,Saturday,8:10 AM - 10:10 AM,OS Lab,jk,a2,csd
-32,Saturday,10:25 AM - 11:20 AM,CN,jsh,all,csd
+3,Monday,8:10 AM - 10:10 AM,Free Slot,,a3,csd
+4,Monday,10:25 AM - 11:20 AM,ADS,is,all,csd
+5,Monday,11:20 AM - 12:15 PM,AM - III,rp,all,csd
+6,Monday,1:05 PM - 2:00 PM,OS,jk,all,csd
+7,Monday,2:00 PM - 2:55 PM,SEPM,stp,all,csd
+8,Tuesday,8:10 AM - 10:10 AM,Free Slot,,a1,csd
+9,Tuesday,8:10 AM - 10:10 AM,ADS Lab,is,a2,csd
+10,Tuesday,8:10 AM - 10:10 AM,CN Lab,jsh,a3,csd
+11,Tuesday,10:25 AM - 11:20 AM,ADS,is,all,csd
+12,Tuesday,11:20 AM - 12:15 PM,AM - III,rp,all,csd
+13,Tuesday,1:05 PM - 2:00 PM,OS,jk,all,csd
+14,Tuesday,2:00 PM - 2:55 PM,SEPM,stp,all,csd
+15,Wednesday,8:10 AM - 10:10 AM,ADS Lab,is,a3,csd
+16,Wednesday,8:10 AM - 10:10 AM,Free Slot,,a2,csd
+17,Wednesday,8:10 AM - 10:10 AM,CN Lab,jsh,a1,csd
+18,Wednesday,10:25 AM - 11:20 AM,CN,jsh,all,csd
+19,Wednesday,11:20 AM - 12:15 PM,AM - III,rp,all,csd
+20,Wednesday,1:05 PM - 2:00 PM,OS,jk,all,csd
+21,Wednesday,2:00 PM - 2:55 PM,SEPM,stp,all,csd
+22,Thursday,8:10 AM - 10:10 AM,ADS Lab,is,a1,csd
+23,Thursday,8:10 AM - 10:10 AM,PBL Lab,yp,a2,csd
+24,Thursday,8:10 AM - 10:10 AM,OS Lab,jk,a3,csd
+25,Thursday,10:25 AM - 11:20 AM,AM - III Tutorial,rp,all,csd
+26,Thursday,11:20 AM - 12:15 PM,ADS,is,all,csd
+27,Friday,8:10 AM - 10:10 AM,ADS Lab,is,a2,csd
+28,Friday,8:10 AM - 10:10 AM,PBL Lab,yp,a3,csd
+29,Friday,8:10 AM - 10:10 AM,OS Lab,jk,a1,csd
+30,Friday,10:25 AM - 11:20 AM,CN,jsh,all,csd
+31,Friday,11:20 AM - 12:15 PM,CST,yp,all,csd
+32,Saturday,8:10 AM - 10:10 AM,ADS Lab,is,a3,csd
+33,Saturday,8:10 AM - 10:10 AM,PBL Lab,yp,a1,csd
+34,Saturday,8:10 AM - 10:10 AM,OS Lab,jk,a2,csd
+35,Saturday,10:25 AM - 11:20 AM,CN,jsh,all,csd
