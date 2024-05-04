@@ -13,6 +13,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
         rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/static/login_register.css" />
     <title>College Companion: Register</title>
 </head>
@@ -44,6 +46,12 @@
         </div>
         <form action="/register" method="post" class="form">
             <div class="form">
+                <input type="text" name="firstName" id="firstName" required placeholder="First name" />
+            </div>
+            <div class="form">
+                <input type="text" name="lastName" id="lastName" required placeholder="Last name" />
+            </div>
+            <div class="form">
                 <input type="text" name="username" id="username" required placeholder="Username" />
             </div>
             <div class="form">
@@ -51,9 +59,14 @@
             </div>
             <div class="form">
                 <input type="password" name="password" id="password" placeholder="Password" />
+                <input type="checkbox" id="showPassword" />
+                <label for="showPassword">Show Password</label>
+                <div id="passwordRequirements"></div>
             </div>
             <div class="form">
                 <input type="password" name="confirmation" id="confirmation" placeholder="Confirm Password" />
+                <input type="checkbox" id="showConfirmation" />
+                <label for="showConfirmation">Show Confirmation</label>
             </div>
 
             <div class="form">
@@ -62,14 +75,21 @@
                     <option value="csd">Computer Science and Design</option>
                 </select>
             </div>
+
+            <div class="alert alert-light" role="alert">
+                <p> Couldn't find your branch? 
+                <a href="mailto:borse.aditya7@gmail.com?subject=Request%20to%20Add%20Branch%20to%20College%20Companion&body=Dear%20College%20Companion%20Team,%0A%0AI%20couldn't%20find%20my%20branch%20listed%20in%20the%20College%20Companion%20app.%20Could%20you%20please%20add%20'%3CYour%20Branch%20Name%3E'%20to%20the%20available%20options?%0A%0AThank%20you.%0A%0ARegards,%0A%3CYour%20Name%3E">Email us.</a></p>
+            </div>
+
             <div class="flexbox2">
                 <div class="form">
                     <select name="year" class="year">
                         <option value="" disabled selected>Year</option>
-                        <option value="1">First</option>
+                        <!--<option value="1">First</option>-->
                         <option value="2">Second</option>
-                        <option value="3">Third</option>
-                        <option value="4">Fourth</option>
+                        </option>
+                        <!--<option value="3">Third</option>-->
+                        <!--<option value="4">Fourth</option>-->
                     </select>
                 </div>
 
@@ -103,6 +123,44 @@
         <a href="/login" class="continue-to-login">Continue to login</a>
         {% endif %}
     </div>
-</body>
 
+    <script>
+        const passwordField = document.getElementById('password');
+        const passwordRequirements = document.getElementById('passwordRequirements');
+        const confirmationField = document.getElementById('confirmation');
+        const showPasswordCheckbox = document.getElementById('showPassword');
+        const showConfirmationCheckbox = document.getElementById('showConfirmation');
+
+        passwordField.addEventListener('input', function () {
+            const password = passwordField.value;
+            let message = '';
+
+            if (password.length < 8) {
+                message = 'Password must be at least 8 characters long.';
+            } else if (!/[A-Z]/.test(password)) {
+                message = 'Password must contain at least one uppercase letter.';
+            } else if (!/[a-z]/.test(password)) {
+                message = 'Password must contain at least one lowercase letter.';
+            } else if (!/[0-9]/.test(password)) {
+                message = 'Password must contain at least one digit.';
+            } else if (!/[^A-Za-z0-9]/.test(password)) {
+                message = 'Password must contain at least one special character.';
+            } else {
+                message = 'Password is strong.';
+            }
+
+            passwordRequirements.textContent = message;
+        });
+
+        showPasswordCheckbox.addEventListener('change', function () {
+            const type = this.checked ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+        });
+
+        showConfirmationCheckbox.addEventListener('change', function () {
+            const type = this.checked ? 'text' : 'password';
+            confirmationField.setAttribute('type', type);
+        });
+    </script>
+</body>
 </html>
