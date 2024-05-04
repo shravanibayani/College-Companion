@@ -1,0 +1,15 @@
+{% extends 'layout.html' %} 
+{% block title %} Apology {% endblock %} 
+{% block head %} 
+{{ super() }} 
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> 
+{% endblock %} 
+{% block main %}
+<div class="flex justify-center items-center h-48">
+    <div class="text-center">
+      <span class="text-6xl">😢</span>
+      <h3 class="mt-2 text-sm font-medium text-gray-900">No syllabus uploaded yet</h3>
+      <p class="mt-1 text-sm text-gray-500">Syllabus for this semester will be available soon.</p>
+    </div>
+  </div>
+{% endblock %}

@@ -1,12 +1,60 @@
 {% extends "layout.html" %}
-
-{% block title %}
-Study Buddy
+{% block title %} Study Buddy - Study Buddy {% endblock %}
+{% block head %}
+{{ super() }}
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 {% endblock %}
-
 {% block main %}
+<div class="min-h-screen flex flex-col py-24 sm:px-6 lg:px-8">
+    <div class="sm:mx-auto sm:w-full sm:max-w-md">
+        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            Welcome to Study Buddy
+        </h2>
+        <p class="mt-2 text-center text-sm text-gray-600 mb-5">
+            Your one-stop destination for academic resources
+        </p>
+        <div class="flex justify-center space-x-4">
+            <a href="/studybuddy?sem=1"
+                class="px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded">Semester 1</a>
+            <a href="/studybuddy?sem=2"
+                class="px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded">Semester 2</a>
+        </div>
+    </div>
 
-<a href="{{ url_for('studybuddy', id=1)}}">Semester 1</a>
-<a href="{{ url_for('studybuddy', id=2)}}">Semester 2</a>
-
+    {% if sem == 1 %}
+    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <p class="text-center text-gray-600">Vo toh ho gaya :)</p>
+    </div>
+    {% elif sem == 2 %}
+    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div class="bg-white py-8 px-4 shadow-md sm:rounded-lg sm:px-10">
+            <ul class="space-y-2">
+                <li>
+                    <a href="/syllabus?sem={{sem}}"
+                        class="block px-4 py-2 bg-gray-100 text-gray-800 rounded-md hover:bg-gray-200 flex items-center justify-between">
+                        <span>Syllabus</span>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="/notes?"
+                        class="block px-4 py-2 bg-gray-100 text-gray-800 rounded-md hover:bg-gray-200">Notes</a>
+                </li>
+                <li>
+                    <a href="https://onlinecourses.nptel.ac.in/" target="_blank"
+                        class="block px-4 py-2 bg-gray-100 text-gray-800 rounded-md hover:bg-gray-200">NPTEL</a>
+                </li>
+                <li>
+                    <a href="/faculty"
+                        class="block px-4 py-2 bg-gray-100 text-gray-800 rounded-md hover:bg-gray-200">Faculty</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+</div>
 {% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'layout.html' %}
+{% block title %} Faculty {% endblock %}
+{% block head %}
+{{ super() }}
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+  body {
+    font-family: 'Open Sans', sans-serif;
+  }
+  .faculty-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    overflow-y: auto;
+    max-height: 450px;
+    margin: 15px 15px ;  /* Center the list horizontally */
+  }
+
+  .faculty-card {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Added hover effect for subtle distinction */
+    transition: transform 0.2s ease-in-out;  /* Smooth transition for hover */
+  }
+
+  .faculty-card:hover {
+    transform: translateY(-2px);  /* Slight upward movement on hover */
+  }
+
+  /* Added two new card styles for variation  */
+  .faculty-card.alternate-1 {
+    background-color: #f5f5f5;  /* Light gray background */
+  }
+
+  .faculty-card.alternate-2 {
+    background-color: #f0f9ff;  /* Light blue background */
+  }
+
+  .faculty-card h2 {  /* Style the name as heading */
+    font-size: 1.125rem;  /* Adjust as needed */
+    margin-bottom: 0.5rem;
+  }
+
+  .faculty-card p {  /* Style all paragraphs */
+    font-size: 0.9rem;  /* Adjust as needed */
+    line-height: 1.5;  /* Improve readability */
+    margin-bottom: 0.75rem;
+  }
+</style>
+{% endblock %}
+
+{% block main %}
+<div class="faculty-list">
+  {% for item in faculty %}
+    <div class="faculty-card shadow-md {% if loop.index % 2 == 0 %}alternate-1{% else %}alternate-2{% endif %}">
+      <div class="flex items-center space-x-3">
+        <div class="flex-shrink-0 relative mx-2">
+          <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+          </svg>
+        </div>
+        <div>
+          <h2 class="font-medium text-gray-900">{{ item.name }}</h2>
+          <p class="text-gray-500">{{ subjects[item.subject] }}</p>
+          <p class="text-gray-500"><a href="mailto:{{ item.email }}" class="text-blue-500 hover:text-blue-700">{{ item.email }}</a></p>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
