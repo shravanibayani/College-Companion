@@ -14,6 +14,7 @@
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="/static/login_register.css" />
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
     <title>College Companion: Login</title>
 </head>
 
@@ -32,24 +33,12 @@
         </div>
     </div>
     <div class="login-side second-content">
-        <div class="error msg">
-            {% if error %}
-            <p class="error">{{ error }}</p>
-            {% endif %}
-        </div>
-        <form action="/login" method="post" class="form">
-            <div class="form">
-                <input type="text" name="username" id="username" required placeholder="Username" />
-            </div>
-            <div class="form">
-                <input type="password" name="password" id="password" required placeholder="Password"/>
-            </div>
-            <div class="form submit">
-                <input type="submit" value="Login" />
-            </div>
-        </form>
-        <p>Not a user? <a href="/register">Register</a></p>
+        <button class="flex items-center justify-center px-4 py-2 rounded-md bg-white text-gray-700 hover:bg-gray-100 shadow" onclick="window.location.href='/login'">
+            <svg class="w-4 h-4 mr-2" aria-hidden="true" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.9 12.19,19.9C8.36,19.9 5,16.54 5,12.71C5,8.88 8.36,5.52 12.19,5.52C14.64,5.52 16.72,6.92 17.97,8.76L20.61,6.12C18.35,3.76 15.12,2.28 12.19,2.28C6.47,2.28 2.17,6.59 2.17,12.21C2.17,17.83 6.47,22.14 12.19,22.14C17.42,22.14 21.83,18.25 21.83,12.53C21.83,11.88 21.73,11.29 21.63,10.72L12,10.72V11.1H21.35Z" />
+            </svg>
+            Continue with Google
+          </button>
     </div>
 </body>
-
 </html>

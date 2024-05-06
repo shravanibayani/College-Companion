@@ -46,41 +46,18 @@
         </div>
         <form action="/register" method="post" class="form">
             <div class="form">
-                <input type="text" name="firstName" id="firstName" required placeholder="First name" />
-            </div>
-            <div class="form">
-                <input type="text" name="lastName" id="lastName" required placeholder="Last name" />
-            </div>
-            <div class="form">
                 <input type="text" name="username" id="username" required placeholder="Username" />
             </div>
-            <div class="form">
-                <input type="email" name="email" id="email" required placeholder="Email" />
-            </div>
-            <div class="form">
-                <input type="password" name="password" id="password" placeholder="Password" />
-                <input type="checkbox" id="showPassword" />
-                <label for="showPassword">Show Password</label>
-                <div id="passwordRequirements"></div>
-            </div>
-            <div class="form">
-                <input type="password" name="confirmation" id="confirmation" placeholder="Confirm Password" />
-                <input type="checkbox" id="showConfirmation" />
-                <label for="showConfirmation">Show Confirmation</label>
-            </div>
-
             <div class="form">
                 <select name="branch">
                     <option value="" disabled selected>Branch</option>
                     <option value="csd">Computer Science and Design</option>
                 </select>
             </div>
-
             <div class="alert alert-light" role="alert">
                 <p> Couldn't find your branch? 
                 <a href="mailto:borse.aditya7@gmail.com?subject=Request%20to%20Add%20Branch%20to%20College%20Companion&body=Dear%20College%20Companion%20Team,%0A%0AI%20couldn't%20find%20my%20branch%20listed%20in%20the%20College%20Companion%20app.%20Could%20you%20please%20add%20'%3CYour%20Branch%20Name%3E'%20to%20the%20available%20options?%0A%0AThank%20you.%0A%0ARegards,%0A%3CYour%20Name%3E">Email us.</a></p>
             </div>
-
             <div class="flexbox2">
                 <div class="form">
                     <select name="year" class="year">
@@ -119,48 +96,6 @@
                 <input type="submit" value="Register" />
             </div>
         </form>
-        {% if success %}
-        <a href="/login" class="continue-to-login">Continue to login</a>
-        {% endif %}
-    </div>
-
-    <script>
-        const passwordField = document.getElementById('password');
-        const passwordRequirements = document.getElementById('passwordRequirements');
-        const confirmationField = document.getElementById('confirmation');
-        const showPasswordCheckbox = document.getElementById('showPassword');
-        const showConfirmationCheckbox = document.getElementById('showConfirmation');
-
-        passwordField.addEventListener('input', function () {
-            const password = passwordField.value;
-            let message = '';
-
-            if (password.length < 8) {
-                message = 'Password must be at least 8 characters long.';
-            } else if (!/[A-Z]/.test(password)) {
-                message = 'Password must contain at least one uppercase letter.';
-            } else if (!/[a-z]/.test(password)) {
-                message = 'Password must contain at least one lowercase letter.';
-            } else if (!/[0-9]/.test(password)) {
-                message = 'Password must contain at least one digit.';
-            } else if (!/[^A-Za-z0-9]/.test(password)) {
-                message = 'Password must contain at least one special character.';
-            } else {
-                message = 'Password is strong.';
-            }
-
-            passwordRequirements.textContent = message;
-        });
-
-        showPasswordCheckbox.addEventListener('change', function () {
-            const type = this.checked ? 'text' : 'password';
-            passwordField.setAttribute('type', type);
-        });
-
-        showConfirmationCheckbox.addEventListener('change', function () {
-            const type = this.checked ? 'text' : 'password';
-            confirmationField.setAttribute('type', type);
-        });
-    </script>
+    </div>  
 </body>
 </html>

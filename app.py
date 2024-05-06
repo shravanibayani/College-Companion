@@ -1,26 +1,59 @@
 from datetime import datetime, timedelta
 from cs50 import SQL
-import pprint
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, jsonify, render_template, request, session, redirect, url_for
 from flask_session import Session
 from werkzeug.security import generate_password_hash, check_password_hash
-from helpers import login_required, check_password
 from flask import send_file
-import os
+import os, json, requests, pprint, sqlite3
+from flask_login import (
+    LoginManager,
+    current_user,
+    login_required,
+    login_user,
+    logout_user,
+)
+from oauthlib.oauth2 import WebApplicationClient
+from dotenv import load_dotenv
+from db import init_db_command
+from user import User
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
+
+load_dotenv()
+GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
+GOOGLE_CLIENT_SECRET = os.getenv('CLIENT_SECRET')
+GOOGLE_DISCOVERY_URL = (
+    "https://accounts.google.com/.well-known/openid-configuration"
+)
 
 # Configuring the application
 app = Flask(__name__)
-
-
-# database
-db = SQL("sqlite:///database.db")
-
+app.secret_key = os.getenv('SECRET_KEY')
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 # Configuring the session
 app.config["SESSION_PERMENENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
+# DB setup
+try:
+    init_db_command()
+except sqlite3.OperationalError:
+    pass
+
+# OAuth 2 client setup
+client = WebApplicationClient(GOOGLE_CLIENT_ID)
+
+# Flask login helper to retrieve user from db
+@login_manager.user_loader
+def load_user(user_id):
+    return User.get(user_id)
+
+# database
+db = SQL("sqlite:///database.db")
 
 @app.after_request
 def add_header(response):
@@ -28,7 +61,6 @@ def add_header(response):
     response.headers["Pragma"] = "no-cache"
     response.headers["Expires"] = "0"
     return response
-
 
 # Allowed branches
 branches = ['csd']
@@ -49,53 +81,81 @@ subjects = {'ads':'Advanced Data Structures',
 
 
 @app.route("/")
-@login_required
-def home():
-    # Home screen
-    return render_template("home.html")
-
-
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    session.clear()
-    if request.method == "POST":
-        username = request.form.get("username")
-        password = request.form.get("password")
-        error = None
-        if not username:
-            error = "Please enter an username"
-
-        elif not password:
-            error = "Please enter a password"
-
-        else:
-            rows = db.execute(
-                "SELECT * FROM students WHERE username = ?", username
-            )
-
-            if len(rows) != 1 or not check_password_hash(
-                rows[0]["password_hash"], password
-            ):
-                error = "invalid username and/or password"
-
-        if error is None:
-            session["user_id"] = rows[0]["id"]
-            return redirect("/")
-        else:
-            return render_template("login.html", error=error)
+def index():
+    if current_user.is_authenticated:
+        return render_template("home.html")
     else:
         return render_template("login.html")
+
+
+def get_google_provider_cfg():
+    return requests.get(GOOGLE_DISCOVERY_URL).json()
+
+
+@app.route("/login")
+def login():
+    google_provider_cfg = get_google_provider_cfg()
+    authorization_endpoint = google_provider_cfg["authorization_endpoint"]
+    request_uri = client.prepare_request_uri(
+        authorization_endpoint,
+        redirect_uri=request.base_url + "/callback",
+        scope=["openid", "email", "profile"],
+    )
+    return redirect(request_uri)
+
+
+@app.route("/login/callback")
+def callback():
+    code = request.args.get("code")
+    google_provider_cfg = get_google_provider_cfg()
+    token_endpoint = google_provider_cfg["token_endpoint"]
+    token_url, headers, body = client.prepare_token_request(
+        token_endpoint,
+        authorization_response=request.url,
+        redirect_url=request.base_url,
+        code=code
+    )
+    token_response = requests.post(
+        token_url,
+        headers=headers,
+        data=body,
+        auth=(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET),
+    )
+    client.parse_request_body_response(json.dumps(token_response.json()))
+
+    userinfo_endpoint = google_provider_cfg["userinfo_endpoint"]
+    uri, headers, body = client.add_token(userinfo_endpoint)
+    userinfo_response = requests.get(uri, headers=headers, data=body)
+
+    if userinfo_response.json().get("email_verified"):
+        unique_id = userinfo_response.json()["sub"]
+        users_email = userinfo_response.json()["email"]
+        picture = userinfo_response.json()["picture"]
+        users_name = userinfo_response.json()["given_name"]
+        if not users_email.endswith("kkwagh.edu.in"):
+            return render_template("login_fail.html", message="Currently, only students of the K. K. Wagh Institute are allowed to sign up. Please ensure you have a valid K. K. Wagh Institute email address to proceed with the sign-up process.")
+    else:
+        return render_template("login_fail.html", message="User email not available or not verified by Google.")
+    
+    user = User(
+        id_=unique_id, name=users_name, email=users_email, profile_pic=picture
+    )
+
+    if not User.get(unique_id):
+        User.create(unique_id, users_name, users_email, picture)
+        session["user_id"] = unique_id
+        login_user(user)
+        return redirect(url_for("register"))
+
+    session["user_id"] = unique_id
+    login_user(user)
+    return redirect(url_for("index"))
 
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        first_name = request.form.get("firstName")
-        last_name = request.form.get("lastName")
         username = request.form.get("username")
-        password = request.form.get("password")
-        email = request.form.get("email")
-        confirmation = request.form.get("confirmation")
         branch = request.form.get("branch")
         division = request.form.get("division")
         rollno = request.form.get("rollno")
@@ -103,26 +163,11 @@ def register():
         year_int = int(year)
         error = None
         success = None
-        if not username:
-            error = "Please enter a username"
-        elif not password:
-            error = "Please enter a password"
-        elif not first_name:
-            error = "Please enter your first name"
-        elif not last_name:
-            error = "Please enter your last name"
-        elif not check_password(password):
-            error = "Password doesn't meet requirements"
-        elif not confirmation:
-            error = "Password confirmation is required"
-        elif not email:
-            error = "Please enter your college email"
-        elif not email.endswith("kkwagh.edu.in"):
-            error = "Only students of K. K. Wagh Institute can register."
-        elif password != confirmation:
-            error = "Password confirmation did not match"
-        elif not branch:
+
+        if not branch:
             error = "Please select your branch"
+        elif not username:
+            error = "Please enter a username"
         elif branch not in branches:
             error = "Please select a valid branch"
         elif not division:
@@ -135,34 +180,33 @@ def register():
             error = "Please enter a valid roll number"
         elif not year_int or year_int not in years:
             error = "Please choose a valid year"
-        password_hash = generate_password_hash(password)
         if error is None:
             try:
+                print("user id: ",session['user_id'])
                 db.execute(
-                    "INSERT INTO students (first_name, last_name, username, password_hash, email, roll_no, branch, division, year) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                    first_name,
-                    last_name,
+                    "INSERT INTO students (id, username, roll_no, branch, division, year) VALUES (?, ?, ?, ?, ?, ?)",
+                    session['user_id'],
                     username,
-                    password_hash,
-                    email,
                     int(rollno),
                     branch,
                     division,
                     year_int
                 )
-                return render_template("register.html", error=error, success="Registration Successful!")
-            except:
-                return render_template("register.html", error="Username and/or email has already been registered", success=success)
-        else:
-            return render_template("register.html", error=error, success=success)
+                return redirect((url_for("index")))
+            except Exception as e:
+                logging.error(f"Registration error: {e}")
+                db.rollback()
+                return jsonify({"error": str(e)}), 500
     else:
         return render_template("register.html")
 
 
 @app.route("/logout")
+@login_required
 def logout():
+    logout_user()
     session.clear()
-    return redirect("/")
+    return redirect(url_for("index"))
 
 
 # to-do list feature
@@ -299,11 +343,11 @@ def syllabus_download():
         "SELECT division FROM students WHERE id = ?", student_id)[0]['division']
     student_year = db.execute(
         "SELECT year FROM students WHERE id = ?", student_id)[0]['year']
-    file_path = db.execute(
+    try:
+        file_path = db.execute(
         "SELECT file_path FROM notes WHERE (branch = ?) AND (div = ?) AND (year = ?) AND (unit = ?) AND (subject = ?)", student_branch, student_division, student_year, sem, "syllabus")[0]['file_path']
-    if file_path:
         return send_file(file_path, as_attachment=True)
-    else:
+    except:
         return render_template('apology.html')
 
 
@@ -330,7 +374,10 @@ def notes():
     for note in notes:
         unique_subjects[note['subject']] = None
     unique_subject_list = list(unique_subjects.keys())
-    unique_subject_list.remove('syllabus')
+
+    if 'syllabus' in unique_subject_list:
+        unique_subject_list.remove('syllabus')
+    
     subject_requested = request.args.get('subject')
     requested_unit = request.args.get('unit')
 
@@ -340,11 +387,11 @@ def notes():
             notes_filtered = [note for note in requested_notes if note['unit'] == requested_unit]
             for note in notes_filtered:
                 note['file_name'] = os.path.basename(note['file_path'])
-            print("Requested Notes: ")
+            # print("Requested Notes: ")
             # pprint.pp(requested_notes)
-            print("Filtered Notes: ")
+            # print("Filtered Notes: ")
             # pprint.pp(notes_filtered)
-            print("Requested Unit: "+ str(requested_unit))
+            # print("Requested Unit: "+ str(requested_unit))
             if requested_unit == '0':
                 requested_unit = 'Reference'
             return render_template('subject.html', notes_filtered=notes_filtered, subjects=subjects, subject_requested=subject_requested, requested_unit=requested_unit, student_username=stduent_username)
@@ -414,4 +461,4 @@ def faculty():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, ssl_context="adhoc")
