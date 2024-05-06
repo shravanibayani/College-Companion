@@ -1,5 +1,5 @@
 # git ignore file for this flask project
-/_pycache_
+/__pycache__
 /.vscode 
 /flask_session
 database.db
@@ -8,3 +8,7 @@ faculty.csv
 *.csv
 *.db
 *.sqlite3
+.env
+schema.sql
+sqlite_db
+commands.sql
